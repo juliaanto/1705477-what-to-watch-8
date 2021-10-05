@@ -1,4 +1,12 @@
+import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {AppRoute} from '../../const';
+import AddReviewScreen from '../add-review-screen/add-review-screen';
+import FilmScreen from '../film-screen/film-screen';
 import MainScreen from '../main-screen/main-screen';
+import MyListScreen from '../my-list-screen/my-list-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import PlayerScreen from '../player-screen/player-screen';
+import SignInScreen from '../sign-in-screen/sign-in-screen';
 
 type AppProps = {
   promo: {
@@ -20,10 +28,35 @@ function App(props: AppProps): JSX.Element {
 
 
   return (
-    <MainScreen
-      promo={promo}
-      films={films}
-    />
+
+    <BrowserRouter>
+      <Switch>
+        <Route exact path={AppRoute.Main}>
+          <MainScreen
+            promo={promo}
+            films={films}
+          />
+        </Route>
+        <Route exact path={AppRoute.SignIn}>
+          <SignInScreen />
+        </Route>
+        <Route exact path={AppRoute.MyList}>
+          <MyListScreen />
+        </Route>
+        <Route exact path={AppRoute.Film}>
+          <FilmScreen />
+        </Route>
+        <Route exact path={AppRoute.AddReview}>
+          <AddReviewScreen />
+        </Route>
+        <Route exact path={AppRoute.Player}>
+          <PlayerScreen />
+        </Route>
+        <Route>
+          <NotFoundScreen />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
