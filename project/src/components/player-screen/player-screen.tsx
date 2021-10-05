@@ -1,4 +1,4 @@
-function Player(): JSX.Element {
+function PlayerScreen(): JSX.Element {
   const playerStyle = {
     left: '30%',
   };
@@ -39,4 +39,4 @@ function Player(): JSX.Element {
   );
 }
 
-export default Player;
+export default PlayerScreen;

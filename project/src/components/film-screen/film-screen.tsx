@@ -1,4 +1,4 @@
-function Film(): JSX.Element {
+function FilmScreen(): JSX.Element {
   return (
     <>
       <section className="film-card film-card--full">
@@ -160,4 +160,4 @@ function Film(): JSX.Element {
   );
 }
 
-export default Film;
+export default FilmScreen;

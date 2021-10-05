@@ -1,4 +1,4 @@
-function AddReview(): JSX.Element {
+function AddReviewScreen(): JSX.Element {
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -95,4 +95,4 @@ function AddReview(): JSX.Element {
   );
 }
 
-export default AddReview;
+export default AddReviewScreen;

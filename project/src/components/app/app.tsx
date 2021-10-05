@@ -1,4 +1,4 @@
-import Main from '../main/main';
+import MainScreen from '../main-screen/main-screen';
 
 type AppProps = {
   promo: {
@@ -20,7 +20,7 @@ function App(props: AppProps): JSX.Element {
 
 
   return (
-    <Main
+    <MainScreen
       promo={promo}
       films={films}
     />
