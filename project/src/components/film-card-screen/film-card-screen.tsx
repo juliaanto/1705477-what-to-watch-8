@@ -1,11 +1,11 @@
-type FilmCardProps = {
+type FilmCardScreenProps = {
   film: {
     name: string,
     previewImage: string
   }
 }
 
-function FilmCard(props: FilmCardProps): JSX.Element {
+function FilmCardScreen(props: FilmCardScreenProps): JSX.Element {
   const {film} = props;
   const {name, previewImage} = film;
 
@@ -22,4 +22,4 @@ function FilmCard(props: FilmCardProps): JSX.Element {
   );
 }
 
-export default FilmCard;
+export default FilmCardScreen;

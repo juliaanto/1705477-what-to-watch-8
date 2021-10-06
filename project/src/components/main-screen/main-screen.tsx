@@ -1,6 +1,7 @@
-import FilmCard from '../film-card/film-card';
+import FilmCardScreen from '../film-card-screen/film-card-screen';
+import Logo from '../logo/logo';
 
-type MainProps = {
+type MainScreenProps = {
   promo: {
     name: string,
     genre: string,
@@ -15,7 +16,7 @@ type MainProps = {
   }[];
 }
 
-function Main(props: MainProps): JSX.Element {
+function MainScreen(props: MainScreenProps): JSX.Element {
   const {promo, films} = props;
 
   return (
@@ -29,11 +30,7 @@ function Main(props: MainProps): JSX.Element {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a className="logo__link" href="/">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            <Logo />
           </div>
 
           <ul className="user-block">
@@ -117,7 +114,7 @@ function Main(props: MainProps): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-            {films.map((film) => <FilmCard key={film.id} film={film} />)}
+            {films.map((film) => <FilmCardScreen key={film.id} film={film} />)}
           </div>
 
           <div className="catalog__more">
@@ -143,5 +140,5 @@ function Main(props: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default MainScreen;
 
