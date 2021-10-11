@@ -1,4 +1,5 @@
-import FilmCardScreen from '../film-card-screen/film-card-screen';
+import {Films} from '../../types/film';
+import FilmList from '../film-list/film-list';
 import Logo from '../logo/logo';
 
 type MainScreenProps = {
@@ -9,11 +10,7 @@ type MainScreenProps = {
     previewImage: string,
     posterImage: string,
   },
-  films: {
-    id: number,
-    name: string,
-    previewImage: string,
-  }[];
+  films: Films;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
@@ -113,9 +110,9 @@ function MainScreen(props: MainScreenProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {films.map((film) => <FilmCardScreen key={film.id} film={film} />)}
-          </div>
+          <FilmList
+            films={films}
+          />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
