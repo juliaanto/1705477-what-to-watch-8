@@ -5,7 +5,7 @@ export const films: Film[] = [
     id: 1,
     name: 'The Grand Budapest Hotel',
     posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
-    previewImage: 'img/the-grand-budapest-hotel.jpg',
+    previewImage: 'img/bg-the-grand-budapest-hotel.jpg',
     backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
     backgroundColor: '#ffffff',
     videoLink: 'https://upload.wikimedia.org/wikipedia/commons/7/73/The_Great_Gatsby_trailer_%281926%29.webm',
