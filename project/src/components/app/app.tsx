@@ -50,7 +50,7 @@ function App({promo, films}: AppProps): JSX.Element {
           <AddReviewScreen />
         </Route>
         <Route exact path={AppRoute.Player}>
-          <PlayerScreen />
+          <PlayerScreen film={films[1]}/>
         </Route>
         <Route>
           <NotFoundScreen />

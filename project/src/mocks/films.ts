@@ -23,7 +23,7 @@ export const films: Film[] = [
   {
     id: 2,
     name: 'Bohemian Rhapsody',
-    posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
+    posterImage: 'img/player-poster.jpg',
     previewImage: 'img/bohemian-rhapsody.jpg',
     backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
     backgroundColor: '#ffffff',
