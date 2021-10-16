@@ -2,6 +2,9 @@ import {useState, MouseEvent} from 'react';
 import Logo from '../logo/logo';
 import {Films} from '../../types/film';
 import FilmCardScreen from '../film-card-screen/film-card-screen';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
+import {useHistory} from 'react-router';
 
 type MyListScreenProps = {
   films: Films;
@@ -10,6 +13,7 @@ type MyListScreenProps = {
 function MyListScreen(props: MyListScreenProps): JSX.Element {
   const {films} = props;
   const favoriteFilms = films.filter((film) => film.isFavorite === true);
+  const history = useHistory();
 
   const [, setActiveCard] = useState({});
 
@@ -29,7 +33,7 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link" href="/">Sign out</a>
+            <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
           </li>
         </ul>
       </header>
@@ -49,6 +53,7 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
                 onMouseLeave={({target}: MouseEvent<HTMLElement>) => {
                   setActiveCard([{}]);
                 }}
+                onClick={() => history.push(`/films/${film.id}`)}
               >
                 <FilmCardScreen
                   film={film}

@@ -1,6 +1,5 @@
 import {useState, MouseEvent} from 'react';
 import {useHistory} from 'react-router';
-// import {AppRoute} from '../../const';
 import {Films} from '../../types/film';
 import FilmCardScreen from '../film-card-screen/film-card-screen';
 

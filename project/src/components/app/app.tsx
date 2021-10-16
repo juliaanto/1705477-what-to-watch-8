@@ -47,10 +47,10 @@ function App({promo, films}: AppProps): JSX.Element {
           <FilmScreen films={films}/>
         </Route>
         <Route exact path={AppRoute.AddReview}>
-          <AddReviewScreen film={films[1]}/>
+          <AddReviewScreen films={films}/>
         </Route>
         <Route exact path={AppRoute.Player}>
-          <PlayerScreen film={films[1]}/>
+          <PlayerScreen films={films}/>
         </Route>
         <Route>
           <NotFoundScreen />

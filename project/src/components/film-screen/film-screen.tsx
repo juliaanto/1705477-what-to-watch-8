@@ -1,7 +1,9 @@
 import Logo from '../logo/logo';
 import {Film, Films} from '../../types/film';
-import {useParams} from 'react-router';
+import {useParams, useHistory} from 'react-router';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 type FilmScreenProps = {
   films: Films;
@@ -11,6 +13,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
   const {films} = props;
   const {id} = useParams<{id: string}>();
   const film: Film | undefined = films.find((element) => element.id === Number(id));
+  const history = useHistory();
 
   if (film !== undefined) {
     return (
@@ -30,12 +33,14 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
 
               <ul className="user-block">
                 <li className="user-block__item">
-                  <div className="user-block__avatar">
+                  <div className="user-block__avatar"
+                    onClick={() => history.push(AppRoute.MyList)}
+                  >
                     <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
                   </div>
                 </li>
                 <li className="user-block__item">
-                  <a className="user-block__link" href="/">Sign out</a>
+                  <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
                 </li>
               </ul>
             </header>
@@ -49,19 +54,19 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
                 </p>
 
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
+                  <Link to={`/player/${film.id}`} className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
-                  </button>
+                  </Link>
                   <button className="btn btn--list film-card__button" type="button">
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>
                     </svg>
                     <span>My list</span>
                   </button>
-                  <a href="add-review.html" className="btn film-card__button">Add review</a>
+                  <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
                 </div>
               </div>
             </div>
