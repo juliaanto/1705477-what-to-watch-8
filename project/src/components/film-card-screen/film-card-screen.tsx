@@ -1,8 +1,8 @@
+import {Link} from 'react-router-dom';
+import {Film} from '../../types/film';
+
 type FilmCardScreenProps = {
-  film: {
-    name: string,
-    previewImage: string
-  }
+  film: Film;
 }
 
 function FilmCardScreen(props: FilmCardScreenProps): JSX.Element {
@@ -15,7 +15,7 @@ function FilmCardScreen(props: FilmCardScreenProps): JSX.Element {
         <img src={previewImage} alt={name} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}</a>
+        <Link to={`/films/${film.id}`} className="small-film-card__link">{name}</Link>
       </h3>
     </>
   );
