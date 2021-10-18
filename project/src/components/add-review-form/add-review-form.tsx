@@ -1,17 +1,25 @@
 import {useState, ChangeEvent} from 'react';
 
-type RatingElementProps = {
-  ratingValue: number;
+const RATING_VALUES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+type RatingListProps = {
+  ratingValues: number[];
 }
 
-function RatingElement(props: RatingElementProps): JSX.Element {
-  const {ratingValue} = props;
+function RatingList(props: RatingListProps): JSX.Element {
+  const {ratingValues} = props;
+  const ratingElements = ratingValues.map((ratingValue: number) =>
+    (
+      <>
+        <input className="rating__input" id={`star-${ratingValue}`} type="radio" name="rating" value={ratingValue}/>
+        <label className="rating__label" htmlFor={`star-${ratingValue}`}>Rating {ratingValue}</label>
+      </>
+    ));
 
   return (
-    <>
-      <input className="rating__input" id={`star-${ratingValue}`} type="radio" name="rating" value={ratingValue}/>
-      <label className="rating__label" htmlFor={`star-${ratingValue}`}>Rating {ratingValue}</label>
-    </>
+    <div className="rating__stars">
+      {ratingElements}
+    </div>
   );
 }
 
@@ -21,25 +29,12 @@ function AddReviewForm(): JSX.Element {
 
   return (
     <form action="#" className="add-review__form">
-      <div className="rating">
-        <div className="rating__stars"
-          onChange={({target}: ChangeEvent<HTMLInputElement>) => {
-            setRatingValue(Number(target.value));
-          }}
-        >
-
-          <RatingElement ratingValue={10}/>
-          <RatingElement ratingValue={9}/>
-          <RatingElement ratingValue={8}/>
-          <RatingElement ratingValue={7}/>
-          <RatingElement ratingValue={6}/>
-          <RatingElement ratingValue={5}/>
-          <RatingElement ratingValue={4}/>
-          <RatingElement ratingValue={3}/>
-          <RatingElement ratingValue={2}/>
-          <RatingElement ratingValue={1}/>
-
-        </div>
+      <div className="rating"
+        onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+          setRatingValue(Number(target.value));
+        }}
+      >
+        <RatingList ratingValues={RATING_VALUES}/>
       </div>
 
       <div className="add-review__text">
