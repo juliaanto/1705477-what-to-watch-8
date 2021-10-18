@@ -1,5 +1,6 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import {Film} from '../../types/film';
 import AddReviewScreen from '../add-review-screen/add-review-screen';
 import FilmScreen from '../film-screen/film-screen';
 import MainScreen from '../main-screen/main-screen';
@@ -17,15 +18,10 @@ type AppProps = {
     previewImage: string,
     posterImage: string,
   },
-  films: {
-    id: number,
-    name: string,
-    previewImage: string,
-  }[];
+  films: Film[],
 }
 
-function App(props: AppProps): JSX.Element {
-  const {promo, films} = props;
+function App({promo, films}: AppProps): JSX.Element {
 
   return (
 
@@ -43,18 +39,18 @@ function App(props: AppProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MyList}
-          render={() => <MyListScreen />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          render={() => <MyListScreen films={films}/>}
+          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Film}>
-          <FilmScreen />
+          <FilmScreen films={films}/>
         </Route>
         <Route exact path={AppRoute.AddReview}>
-          <AddReviewScreen />
+          <AddReviewScreen films={films}/>
         </Route>
         <Route exact path={AppRoute.Player}>
-          <PlayerScreen />
+          <PlayerScreen films={films}/>
         </Route>
         <Route>
           <NotFoundScreen />

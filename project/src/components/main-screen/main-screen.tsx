@@ -1,4 +1,8 @@
-import FilmCardScreen from '../film-card-screen/film-card-screen';
+import {Link} from 'react-router-dom';
+import {useHistory} from 'react-router';
+import {AppRoute} from '../../const';
+import {Films} from '../../types/film';
+import FilmList from '../film-list/film-list';
 import Logo from '../logo/logo';
 
 type MainScreenProps = {
@@ -9,15 +13,12 @@ type MainScreenProps = {
     previewImage: string,
     posterImage: string,
   },
-  films: {
-    id: number,
-    name: string,
-    previewImage: string,
-  }[];
+  films: Films;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {promo, films} = props;
+  const history = useHistory();
 
   return (
     <>
@@ -35,12 +36,14 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
           <ul className="user-block">
             <li className="user-block__item">
-              <div className="user-block__avatar">
+              <div className="user-block__avatar"
+                onClick={() => history.push(AppRoute.MyList)}
+              >
                 <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link" href="/">Sign out</a>
+              <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>
@@ -113,9 +116,9 @@ function MainScreen(props: MainScreenProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {films.map((film) => <FilmCardScreen key={film.id} film={film} />)}
-          </div>
+          <FilmList
+            films={films}
+          />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
