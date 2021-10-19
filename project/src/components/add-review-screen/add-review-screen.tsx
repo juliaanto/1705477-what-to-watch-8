@@ -1,6 +1,5 @@
 import Logo from '../logo/logo';
 import {Film} from '../../types/film';
-import {useHistory} from 'react-router';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import AddReviewForm from '../add-review-form/add-review-form';
@@ -11,7 +10,6 @@ type AddReviewScreenProps = {
 
 function AddReviewScreen(props: AddReviewScreenProps): JSX.Element {
   const {film} = props;
-  const history = useHistory();
 
   return (
     <section className="film-card film-card--full">
@@ -40,10 +38,10 @@ function AddReviewScreen(props: AddReviewScreenProps): JSX.Element {
 
           <ul className="user-block">
             <li className="user-block__item">
-              <div className="user-block__avatar"
-                onClick={() => history.push(AppRoute.MyList)}
-              >
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <div className="user-block__avatar">
+                <Link to={AppRoute.MyList}>
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                </Link>
               </div>
             </li>
             <li className="user-block__item">
