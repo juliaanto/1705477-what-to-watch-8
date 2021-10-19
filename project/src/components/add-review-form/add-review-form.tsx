@@ -27,21 +27,25 @@ function AddReviewForm(): JSX.Element {
   const [, setReviewText] = useState('');
   const [, setRatingValue] = useState(0);
 
+  const handleRatingInput = ({target}: ChangeEvent<HTMLInputElement>) => {
+    setRatingValue(Number(target.value));
+  };
+
+  const handleTextInput = ({target}: ChangeEvent<HTMLTextAreaElement>) => {
+    setReviewText(target.value);
+  };
+
   return (
     <form action="#" className="add-review__form">
       <div className="rating"
-        onChange={({target}: ChangeEvent<HTMLInputElement>) => {
-          setRatingValue(Number(target.value));
-        }}
+        onChange={handleRatingInput}
       >
         <RatingList ratingValues={RATING_VALUES}/>
       </div>
 
       <div className="add-review__text">
         <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"
-          onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => {
-            setReviewText(target.value);
-          }}
+          onChange={handleTextInput}
         >
         </textarea>
         <div className="add-review__submit">
