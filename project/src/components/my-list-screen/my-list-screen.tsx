@@ -13,7 +13,7 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
   const {films} = props;
   const favoriteFilms = films.filter((film) => film.isFavorite === true);
 
-  const [, setActiveCard] = useState({});
+  const [activeCard, setActiveCard] = useState({});
 
   return (
     <div className="user-page">
@@ -54,6 +54,7 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
               >
                 <FilmCardScreen
                   film={film}
+                  isActive={film === activeCard}
                 />
               </article>
             );

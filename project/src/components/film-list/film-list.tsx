@@ -9,7 +9,7 @@ type FilmListProps = {
 function FilmList(props: FilmListProps): JSX.Element {
   const {films} = props;
 
-  const [, setActiveCard] = useState({});
+  const [activeCard, setActiveCard] = useState({});
 
   return (
     <div className="catalog__films-list">
@@ -26,9 +26,8 @@ function FilmList(props: FilmListProps): JSX.Element {
               setActiveCard([{}]);
             }}
           >
-
             <FilmCardScreen
-              film={film}
+              film={film} isActive={film === activeCard}
             />
 
           </article>
