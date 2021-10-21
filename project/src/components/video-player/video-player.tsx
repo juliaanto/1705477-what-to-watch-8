@@ -1,5 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 
+const VIDEO_TIMEOUT = 1000;
+
 type VideoPlayerProps = {
   previewImage: string;
   src: string;
@@ -37,7 +39,7 @@ function VideoPlayer({previewImage, src, autoPlay, muted, isActive}: VideoPlayer
         if (videoRef.current !== null) {
           videoRef.current.play();
         }
-      }, 1000);
+      }, VIDEO_TIMEOUT);
 
       return;
     }
