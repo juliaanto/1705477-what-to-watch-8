@@ -1,19 +1,23 @@
 import {Link} from 'react-router-dom';
 import {Film} from '../../types/film';
+import VideoPlayer from '../video-player/video-player';
 
 type FilmCardScreenProps = {
   film: Film;
+  isActive: boolean;
 }
 
 function FilmCardScreen(props: FilmCardScreenProps): JSX.Element {
-  const {film} = props;
-  const {name, previewImage} = film;
+  const {film, isActive} = props;
+  const {name, previewImage, previewVideoLink} = film;
 
   return (
     <>
-      <div className="small-film-card__image">
-        <img src={previewImage} alt={name} width="280" height="175" />
-      </div>
+      <Link to={`/films/${film.id}`}>
+        <div className="small-film-card__image">
+          <VideoPlayer src={previewVideoLink} previewImage={previewImage} autoPlay={false} muted isActive={isActive}/>
+        </div>
+      </Link>
       <h3 className="small-film-card__title">
         <Link to={`/films/${film.id}`} className="small-film-card__link">{name}</Link>
       </h3>
