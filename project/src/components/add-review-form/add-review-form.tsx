@@ -8,17 +8,16 @@ type RatingListProps = {
 
 function RatingList(props: RatingListProps): JSX.Element {
   const {ratingValues} = props;
-  const ratingElements = ratingValues.map((ratingValue: number) =>
-    (
-      <>
-        <input className="rating__input" id={`star-${ratingValue}`} type="radio" name="rating" value={ratingValue}/>
-        <label className="rating__label" htmlFor={`star-${ratingValue}`}>Rating {ratingValue}</label>
-      </>
-    ));
 
   return (
     <div className="rating__stars">
-      {ratingElements}
+      {ratingValues.map((ratingValue: number) =>
+        (
+          <>
+            <input className="rating__input" id={`star-${ratingValue}`} type="radio" name="rating" value={ratingValue}/>
+            <label className="rating__label" htmlFor={`star-${ratingValue}`}>Rating {ratingValue}</label>
+          </>
+        ))}
     </div>
   );
 }
