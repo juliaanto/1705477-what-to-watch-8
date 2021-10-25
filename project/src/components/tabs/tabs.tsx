@@ -4,6 +4,7 @@ import {Film} from '../../types/film';
 import {useHistory} from 'react-router';
 import TabOverview from '../tab-overview/tab-overview';
 import TabReviews from '../tab-reviews/tab-reviews';
+import { reviews } from '../../mocks/reviews';
 
 type TabsProps = {
   film: Film;
@@ -11,6 +12,8 @@ type TabsProps = {
 
 function Tabs(props: TabsProps): JSX.Element {
   const {film} = props;
+
+  const filmReviews = reviews.filter((review) => review.id === film.id);
 
   const currentPath = useHistory().location.pathname;
   const overviewPath = `/films/${film.id}`;
@@ -21,7 +24,7 @@ function Tabs(props: TabsProps): JSX.Element {
     if (path === detailsPath) {
       return <TabDetails film={film}/>;
     } else if (path === reviewsPath) {
-      return <TabReviews/>;
+      return <TabReviews reviews={filmReviews}/>;
     } else {
       return <TabOverview film={film}/>;
     }
