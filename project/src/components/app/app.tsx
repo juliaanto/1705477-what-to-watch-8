@@ -43,7 +43,7 @@ function App({promo, films}: AppProps): JSX.Element {
           authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.Film}>
+        <Route path={AppRoute.Film}>
           <FilmOrNotFound films={films}/>
         </Route>
         <Route exact path={AppRoute.AddReview}>
