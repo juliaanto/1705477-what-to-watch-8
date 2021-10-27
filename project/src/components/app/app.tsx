@@ -1,14 +1,15 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {Film} from '../../types/film';
-import AddReviewOrNotFound from '../add-review-or-not-found/add-review-or-not-found';
-import FilmOrNotFound from '../film-or-not-found/film-or-not-found';
+import AddReviewScreen from '../add-review-screen/add-review-screen';
+import FilmScreen from '../film-screen/film-screen';
 import MainScreen from '../main-screen/main-screen';
 import MyListScreen from '../my-list-screen/my-list-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import PlayerOrNotFound from '../player-or-not-found/player-or-not-found';
+import PlayerScreen from '../player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
+import WithNotFound from '../with-not-found/with-not-found';
 
 type AppProps = {
   promo: {
@@ -44,13 +45,22 @@ function App({promo, films}: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route exact path={AppRoute.AddReview}>
-          <AddReviewOrNotFound films={films}/>
+          <WithNotFound
+            render={(film) =>
+              <AddReviewScreen film={film} />}
+          />
         </Route>
         <Route path={AppRoute.Film}>
-          <FilmOrNotFound films={films}/>
+          <WithNotFound
+            render={(film) =>
+              <FilmScreen film={film} />}
+          />
         </Route>
         <Route exact path={AppRoute.Player}>
-          <PlayerOrNotFound films={films}/>
+          <WithNotFound
+            render={(film) =>
+              <PlayerScreen film={film} />}
+          />
         </Route>
         <Route>
           <NotFoundScreen />
