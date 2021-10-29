@@ -56,7 +56,6 @@ function VideoPlayer({previewImage, src, autoPlay, muted, isActive}: VideoPlayer
     if (videoRef.current !== null) {
       muted ? videoRef.current.muted = true : videoRef.current.muted = false;
     }
-
   }, [muted]);
 
   return (

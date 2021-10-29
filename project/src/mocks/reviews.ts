@@ -8,7 +8,7 @@ export const reviews: Review[] = [
       name: 'Kate Muir',
     },
     rating: 8.9,
-    comment: 'Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director\'s funniest and most exquisitely designed movies in years.',
+    comment: '1 Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director\'s funniest and most exquisitely designed movies in years.',
     date: '2019-05-08T14:13:56.569Z',
   },
   {
@@ -18,7 +18,47 @@ export const reviews: Review[] = [
       name: 'Matthew Lickona',
     },
     rating: 7.2,
-    comment: 'The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.',
+    comment: '2 The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.',
+    date: '2019-03-24T13:43:03.569Z',
+  },
+  {
+    id: 2,
+    user: {
+      id: 5,
+      name: 'Matthew Lickona',
+    },
+    rating: 7.2,
+    comment: '3 The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.',
+    date: '2019-03-24T13:43:03.569Z',
+  },
+  {
+    id: 2,
+    user: {
+      id: 5,
+      name: 'Matthew Lickona',
+    },
+    rating: 7.2,
+    comment: '4 The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.',
+    date: '2019-03-24T13:43:03.569Z',
+  },
+  {
+    id: 2,
+    user: {
+      id: 5,
+      name: 'Matthew Lickona',
+    },
+    rating: 7.2,
+    comment: '5 The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.',
+    date: '2019-03-23T13:43:03.569Z',
+  },
+  {
+    id: 2,
+    user: {
+      id: 5,
+      name: 'Matthew Lickona',
+    },
+    rating: 7.2,
+    comment: '6 The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.',
     date: '2019-03-24T13:43:03.569Z',
   },
 ];
