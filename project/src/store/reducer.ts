@@ -12,7 +12,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
     case ActionType.ChangeGenre:
       return {...state, genre: action.payload};
-    case ActionType.ChangeFilmsByGenre:
+    case ActionType.UpdateFilmList:
       return {...state, films: action.payload};
     default:
       return state;
