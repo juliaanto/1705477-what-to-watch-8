@@ -1,10 +1,19 @@
 import {ALL_GENRES} from '../../const';
 import {Films} from '../../types/film';
+import {connect} from 'react-redux';
+import {State} from '../../types/state';
 
 type GenreListProps = {
   genre: string;
   films: Films;
 }
+
+const mapStateToProps = (state: State) => ({
+  genre: state.genre,
+  films: state.films,
+});
+
+const connector = connect(mapStateToProps, null);
 
 function GenreList(props: GenreListProps): JSX.Element {
   const {genre, films} = props;
@@ -27,4 +36,5 @@ function GenreList(props: GenreListProps): JSX.Element {
   );
 }
 
-export default GenreList;
+export {GenreList};
+export default connector(GenreList);
