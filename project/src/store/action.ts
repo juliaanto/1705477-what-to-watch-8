@@ -1,12 +1,12 @@
-import {films} from '../mocks/films';
-import {ChangeGenreAction, ActionType, GetFilmsByGenreAction} from '../types/action';
+import {ChangeGenreAction, ActionType, ChangeFilmsByGenreAction} from '../types/action';
+import { Films } from '../types/film';
 
 export const changeGenre = (genre: string): ChangeGenreAction => ({
   type: ActionType.ChangeGenre,
   payload: genre,
 });
 
-export const getFilmsByGenre = (genre: string): GetFilmsByGenreAction => ({
-  type: ActionType.GetFilmsByGenre,
+export const changeFilmsByGenre = (films: Films): ChangeFilmsByGenreAction => ({
+  type: ActionType.ChangeFilmsByGenre,
   payload: films,
 });

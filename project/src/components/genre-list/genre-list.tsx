@@ -1,11 +1,16 @@
-import {ALL_GENRES} from '../../const';
+import {ALL_GENRES, AppRoute} from '../../const';
 import {Films} from '../../types/film';
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
+import {Link} from 'react-router-dom';
+import {Dispatch} from 'redux';
+import {Actions} from '../../types/action';
+import {changeGenre, changeFilmsByGenre} from '../../store/action';
+import {getFilmsByGenre} from '../../utils/films';
+import {films as initialFilmList} from '../../mocks/films';
 
 type GenreListProps = {
   genre: string;
-  films: Films;
 }
 
 const mapStateToProps = (state: State) => ({
@@ -13,13 +18,25 @@ const mapStateToProps = (state: State) => ({
   films: state.films,
 });
 
-const connector = connect(mapStateToProps, null);
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onChangeGenre(genre: string) {
+    dispatch(changeGenre(genre));
+  },
+  onChangeFilmsByGenre(films: Films) {
+    dispatch(changeFilmsByGenre(films));
+  },
+});
 
-function GenreList(props: GenreListProps): JSX.Element {
-  const {genre, films} = props;
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & GenreListProps;
+
+function GenreList(props: ConnectedComponentProps): JSX.Element {
+  const {genre, onChangeGenre, onChangeFilmsByGenre} = props;
 
   const genresFromFilms = (allFilms: Films): string[] => [...new Set(allFilms.map((film) => film.genre))];
-  const genresList = [ALL_GENRES, ...genresFromFilms(films)];
+  const genresList = [ALL_GENRES, ...genresFromFilms(initialFilmList)];
 
   return (
     <ul className="catalog__genres-list">
@@ -27,8 +44,13 @@ function GenreList(props: GenreListProps): JSX.Element {
         const keyValue = `${id}`;
 
         return (
-          <li key={keyValue} className={`catalog__genres-item ${genre === item ? 'catalog__genres-item--active' : ''} `}>
-            <a href="/" className="catalog__genres-link">{item}</a>
+          <li key={keyValue} className={`catalog__genres-item ${genre === item ? 'catalog__genres-item--active' : ''} `}
+            onClick={() => {
+              onChangeGenre(item);
+              onChangeFilmsByGenre(getFilmsByGenre(item));
+            }}
+          >
+            <Link to={AppRoute.Main} className="catalog__genres-link">{item}</Link>
           </li>
         );
       })}

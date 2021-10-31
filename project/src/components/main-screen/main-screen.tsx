@@ -82,7 +82,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList genre='' films={films}/>
+          <GenreList />
 
           <FilmList films={films} />
 

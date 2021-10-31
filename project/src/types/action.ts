@@ -2,7 +2,7 @@ import {Films} from './film';
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
-  GetFilmsByGenre = 'films/getFilmsByGenre',
+  ChangeFilmsByGenre = 'films/getFilmsByGenre',
 }
 
 export type ChangeGenreAction = {
@@ -10,9 +10,9 @@ export type ChangeGenreAction = {
   payload: string;
 }
 
-export type GetFilmsByGenreAction = {
-  type: ActionType.GetFilmsByGenre;
+export type ChangeFilmsByGenreAction = {
+  type: ActionType.ChangeFilmsByGenre;
   payload: Films;
 }
 
-export type Actions = ChangeGenreAction | GetFilmsByGenreAction;
+export type Actions = ChangeGenreAction | ChangeFilmsByGenreAction;
