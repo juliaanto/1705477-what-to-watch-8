@@ -5,7 +5,7 @@ import {AppRoute, Links} from '../../const';
 import Tabs from '../tabs/tabs';
 import FilmList from '../film-list/film-list';
 import {films} from '../../mocks/films';
-import withNotFoundFilm from '../with-not-found/with-not-found';
+import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
 
 type FilmScreenProps = {
   film: Film;

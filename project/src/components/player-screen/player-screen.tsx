@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {Links} from '../../const';
 import {Film} from '../../types/film';
-import withNotFoundFilm from '../with-not-found/with-not-found';
+import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
 
 type PlayerScreenProps = {
   film: Film;

@@ -1,4 +1,4 @@
-import NotFoundScreen from '../../components/not-found-screen/not-found-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {Film} from '../../types/film';
 import {useParams} from 'react-router';
 import {ComponentType} from 'react';

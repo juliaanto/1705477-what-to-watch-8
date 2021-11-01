@@ -3,7 +3,7 @@ import {Film} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {AppRoute, Links} from '../../const';
 import AddReviewForm from '../add-review-form/add-review-form';
-import withNotFoundFilm from '../with-not-found/with-not-found';
+import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
 
 type AddReviewScreenProps = {
   film: Film;
