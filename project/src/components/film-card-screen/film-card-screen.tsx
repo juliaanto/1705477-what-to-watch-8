@@ -7,6 +7,7 @@ import {updateFilmList} from '../../store/action';
 import {Films} from '../../types/film';
 import {connect, ConnectedProps} from 'react-redux';
 import {getSimilarFilms} from '../../utils/films';
+import {Links} from '../../const';
 
 type FilmCardScreenProps = {
   film: Film;
@@ -30,7 +31,7 @@ function FilmCardScreen(props: ConnectedComponentProps): JSX.Element {
 
   return (
     <>
-      <Link to={`/films/${film.id}`}
+      <Link to={Links.OverviewFilmById(film.id)}
         onClick={() => {
           onUpdateFilmList(getSimilarFilms(film));
         }}
@@ -40,7 +41,7 @@ function FilmCardScreen(props: ConnectedComponentProps): JSX.Element {
         </div>
       </Link>
       <h3 className="small-film-card__title">
-        <Link to={`/films/${film.id}`} className="small-film-card__link">{name}</Link>
+        <Link to={Links.OverviewFilmById(film.id)} className="small-film-card__link">{name}</Link>
       </h3>
     </>
   );

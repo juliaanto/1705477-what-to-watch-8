@@ -1,8 +1,9 @@
 import Logo from '../logo/logo';
 import {Film} from '../../types/film';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, Links} from '../../const';
 import AddReviewForm from '../add-review-form/add-review-form';
+import withNotFoundFilm from '../with-not-found/with-not-found';
 
 type AddReviewScreenProps = {
   film: Film;
@@ -28,7 +29,7 @@ function AddReviewScreen(props: AddReviewScreenProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
+                <Link to={Links.OverviewFilmById(film.id)} className="breadcrumbs__link">{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link" href="/">Add review</a>
@@ -64,4 +65,5 @@ function AddReviewScreen(props: AddReviewScreenProps): JSX.Element {
 
 }
 
-export default AddReviewScreen;
+export {AddReviewScreen};
+export default withNotFoundFilm(AddReviewScreen);

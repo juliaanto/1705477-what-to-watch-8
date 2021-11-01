@@ -1,22 +1,28 @@
 import NotFoundScreen from '../../components/not-found-screen/not-found-screen';
 import {Film} from '../../types/film';
 import {useParams} from 'react-router';
+import {ComponentType} from 'react';
 import {films} from '../../mocks/films';
 
-const allFilms = films;
+type HOCProps = {
+  film: Film;
+};
 
-type WithNotFoundProps = {
-  render: (film: Film) => JSX.Element;
+function withNotFoundFilm<T>(Component: ComponentType<T>)
+  : ComponentType<Omit<T, keyof HOCProps>> {
+
+  type ComponentProps = Omit<T, keyof HOCProps>;
+
+  function WithNotFoundFilm(props: ComponentProps): JSX.Element {
+    const {id} = useParams<{id: string}>();
+    const film: Film | undefined = films.find((element: Film) => element.id === Number(id));
+
+    return (
+      film !== undefined ? <Component {...props as T} film={film} /> : <NotFoundScreen />
+    );
+  }
+
+  return WithNotFoundFilm;
 }
 
-function WithNotFound(props: WithNotFoundProps): JSX.Element {
-  const {render} = props;
-  const {id} = useParams<{id: string}>();
-  const film: Film | undefined = allFilms.find((element: Film) => element.id === Number(id));
-
-  return (
-    film !== undefined ? render(film) : <NotFoundScreen />
-  );
-}
-
-export default WithNotFound;
+export default withNotFoundFilm;

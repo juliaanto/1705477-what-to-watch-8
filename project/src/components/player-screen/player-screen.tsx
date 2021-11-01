@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom';
+import {Links} from '../../const';
 import {Film} from '../../types/film';
+import withNotFoundFilm from '../with-not-found/with-not-found';
 
 type PlayerScreenProps = {
   film: Film;
@@ -16,7 +18,7 @@ function PlayerScreen(props: PlayerScreenProps): JSX.Element {
     <div className="player">
       <video src={film.videoLink} className="player__video" poster={film.posterImage}></video>
 
-      <Link to={`/films/${film.id}`} type="button" className="player__exit">Exit</Link>
+      <Link to={Links.OverviewFilmById(film.id)} type="button" className="player__exit">Exit</Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -48,4 +50,5 @@ function PlayerScreen(props: PlayerScreenProps): JSX.Element {
   );
 }
 
-export default PlayerScreen;
+export {PlayerScreen};
+export default withNotFoundFilm(PlayerScreen);
