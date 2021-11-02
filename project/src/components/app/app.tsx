@@ -9,7 +9,6 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PlayerScreen from '../player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
-import WithNotFound from '../with-not-found/with-not-found';
 
 type AppProps = {
   promo: {
@@ -45,22 +44,13 @@ function App({promo, films}: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route exact path={AppRoute.AddReview}>
-          <WithNotFound
-            render={(film) =>
-              <AddReviewScreen film={film} />}
-          />
+          <AddReviewScreen />
         </Route>
         <Route path={AppRoute.Film}>
-          <WithNotFound
-            render={(film) =>
-              <FilmScreen film={film} />}
-          />
+          <FilmScreen />
         </Route>
         <Route exact path={AppRoute.Player}>
-          <WithNotFound
-            render={(film) =>
-              <PlayerScreen film={film} />}
-          />
+          <PlayerScreen />
         </Route>
         <Route>
           <NotFoundScreen />

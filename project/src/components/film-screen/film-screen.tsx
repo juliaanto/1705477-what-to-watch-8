@@ -1,10 +1,11 @@
 import Logo from '../logo/logo';
 import {Film} from '../../types/film';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, Links} from '../../const';
 import Tabs from '../tabs/tabs';
 import FilmList from '../film-list/film-list';
 import {films} from '../../mocks/films';
+import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
 
 type FilmScreenProps = {
   film: Film;
@@ -53,7 +54,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`/player/${film.id}`} className="btn btn--play film-card__button" type="button">
+                <Link to={Links.PlayerById(film.id)} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -65,7 +66,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={Links.AddReviewByFilmId(film.id)} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -107,4 +108,5 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
   );
 }
 
-export default FilmScreen;
+export {FilmScreen};
+export default withNotFoundFilm(FilmScreen);
