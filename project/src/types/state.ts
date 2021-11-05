@@ -2,5 +2,6 @@ import {Films} from './film';
 
 export type State = {
   genre: string,
-  films: Films
+  films: Films,
+  filmsPerPageCount: number,
 };

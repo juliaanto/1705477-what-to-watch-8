@@ -6,22 +6,24 @@ import {connect} from 'react-redux';
 
 type FilmListProps = {
   films: Films;
+  filmsPerPageCount: number;
 }
 
 const mapStateToProps = (state: State) => ({
   films: state.films,
+  filmsPerPageCount: state.filmsPerPageCount,
 });
 
 const connector = connect(mapStateToProps, null);
 
 function FilmList(props: FilmListProps): JSX.Element {
-  const {films} = props;
+  const {films, filmsPerPageCount} = props;
 
   const [activeCard, setActiveCard] = useState({});
 
   return (
     <div className="catalog__films-list">
-      {films.map((film, id) => {
+      {films.slice(0, filmsPerPageCount).map((film, id) => {
         const keyValue = `${id}`;
 
         return (
