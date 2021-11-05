@@ -4,6 +4,7 @@ import {Films} from '../../types/film';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import Logo from '../logo/logo';
+import ShowMore from '../show-more/show-more';
 
 type MainScreenProps = {
   promo: {
@@ -84,11 +85,10 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
           <GenreList />
 
-          <FilmList films={films} />
+          <FilmList films={films} filmsPerPageCount={8}/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <ShowMore />
+
         </section>
 
         <footer className="page-footer">

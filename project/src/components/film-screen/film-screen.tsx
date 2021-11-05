@@ -78,7 +78,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
               <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
             </div>
 
-            <Tabs film={film}/>
+            <Tabs film={film} />
 
           </div>
         </div>
@@ -87,7 +87,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={similarFilms}/>
+          <FilmList films={similarFilms} filmsPerPageCount={8}/>
         </section>
 
         <footer className="page-footer">
