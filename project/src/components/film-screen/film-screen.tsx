@@ -13,8 +13,8 @@ type FilmScreenProps = {
 
 function FilmScreen(props: FilmScreenProps): JSX.Element {
   const {film} = props;
-  const similarFilmsCount = 4;
-  const similarFilms = films.filter((element) => element.genre === film.genre && element.id !== film.id).slice(0, similarFilmsCount);
+  const SIMILAR_FILMS_COUNT = 4;
+  const similarFilms = films.filter((element) => element.genre === film.genre && element.id !== film.id).slice(0, SIMILAR_FILMS_COUNT);
 
   return (
     <>
@@ -78,7 +78,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
               <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
             </div>
 
-            <Tabs film={film} />
+            <Tabs film={film}/>
 
           </div>
         </div>
@@ -87,7 +87,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={similarFilms} filmsPerPageCount={8}/>
+          <FilmList films={similarFilms} filmsPerPageCount={SIMILAR_FILMS_COUNT}/>
         </section>
 
         <footer className="page-footer">
