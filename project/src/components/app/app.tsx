@@ -30,7 +30,6 @@ function App({promo, films}: AppProps): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <MainScreen
             promo={promo}
-            films={films}
           />
         </Route>
         <Route exact path={AppRoute.SignIn}>

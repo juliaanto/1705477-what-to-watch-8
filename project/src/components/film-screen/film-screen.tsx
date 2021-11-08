@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import {AppRoute, Links} from '../../const';
 import Tabs from '../tabs/tabs';
 import FilmList from '../film-list/film-list';
-import {films} from '../../mocks/films';
 import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
 
 type FilmScreenProps = {
@@ -13,8 +12,8 @@ type FilmScreenProps = {
 
 function FilmScreen(props: FilmScreenProps): JSX.Element {
   const {film} = props;
-  const SIMILAR_FILMS_COUNT = 4;
-  const similarFilms = films.filter((element) => element.genre === film.genre && element.id !== film.id).slice(0, SIMILAR_FILMS_COUNT);
+  // const SIMILAR_FILMS_COUNT = 4;
+  // const similarFilms = films.filter((element) => element.genre === film.genre && element.id !== film.id).slice(0, SIMILAR_FILMS_COUNT);
 
   return (
     <>
@@ -87,7 +86,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={similarFilms} filmsPerPageCount={SIMILAR_FILMS_COUNT}/>
+          <FilmList />
         </section>
 
         <footer className="page-footer">

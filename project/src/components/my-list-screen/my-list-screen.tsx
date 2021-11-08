@@ -1,4 +1,4 @@
-import {useState, MouseEvent} from 'react';
+import {useState} from 'react';
 import Logo from '../logo/logo';
 import {Films} from '../../types/film';
 import FilmCardScreen from '../film-card-screen/film-card-screen';
@@ -45,10 +45,10 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
 
             return (
               <article key={keyValue} className="small-film-card catalog__films-card"
-                onMouseEnter={({target}: MouseEvent<HTMLElement>) => {
+                onMouseEnter={() => {
                   setActiveCard(film);
                 }}
-                onMouseLeave={({target}: MouseEvent<HTMLElement>) => {
+                onMouseLeave={() => {
                   setActiveCard([{}]);
                 }}
               >

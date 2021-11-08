@@ -26,3 +26,10 @@ export const showMoreFilms = () => ({
 export const resetFilmsPerPage = () => ({
   type: ActionType.ResetFilmsPerPage,
 } as const);
+
+export const loadFilms = (films: Films) => ({
+  type: ActionType.LoadFilms,
+  payload: {
+    films,
+  },
+} as const);

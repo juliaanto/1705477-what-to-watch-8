@@ -1,6 +1,5 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {Films} from '../../types/film';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import Logo from '../logo/logo';
@@ -14,11 +13,10 @@ type MainScreenProps = {
     previewImage: string,
     posterImage: string,
   },
-  films: Films;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {promo, films} = props;
+  const {promo} = props;
 
   return (
     <>
@@ -85,7 +83,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
           <GenreList />
 
-          <FilmList films={films} filmsPerPageCount={8}/>
+          <FilmList />
 
           <ShowMore />
 
