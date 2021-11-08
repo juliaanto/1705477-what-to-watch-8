@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import App from './components/app/app';
-import {films, PROMO} from './mocks/films';
+import {PROMO} from './mocks/films';
 import {reducer} from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
@@ -27,7 +27,6 @@ ReactDOM.render(
     <Provider store = {store}>
       <App
         promo={PROMO}
-        films={films}
       />
     </Provider>
   </React.StrictMode>,

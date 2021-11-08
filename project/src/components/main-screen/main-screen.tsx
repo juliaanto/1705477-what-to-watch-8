@@ -4,6 +4,9 @@ import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import Logo from '../logo/logo';
 import ShowMore from '../show-more/show-more';
+import {State} from '../../types/state';
+import {connect, ConnectedProps} from 'react-redux';
+import {getFilmsByGenre} from '../../utils/films';
 
 type MainScreenProps = {
   promo: {
@@ -15,8 +18,19 @@ type MainScreenProps = {
   },
 }
 
-function MainScreen(props: MainScreenProps): JSX.Element {
-  const {promo} = props;
+const mapStateToProps = (state: State) => ({
+  genre: state.genre,
+  films: state.films,
+  filmsPerPageCount: state.filmsPerPageCount,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
+
+function MainScreen(props: ConnectedComponentProps): JSX.Element {
+  const {genre, films, promo, filmsPerPageCount} = props;
 
   return (
     <>
@@ -83,7 +97,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
           <GenreList />
 
-          <FilmList />
+          <FilmList films={getFilmsByGenre(genre, films)} filmsPerPageCount={filmsPerPageCount}/>
 
           <ShowMore />
 
@@ -107,5 +121,6 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   );
 }
 
-export default MainScreen;
+export {MainScreen};
+export default connector(MainScreen);
 

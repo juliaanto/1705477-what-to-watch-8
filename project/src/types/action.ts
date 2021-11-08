@@ -7,7 +7,7 @@ import {
 } from 'axios';
 import {State} from '../types/state';
 
-import {changeGenre, updateFilmList, showMoreFilms, resetFilmsPerPage, resetFilmList, resetGenre, loadFilms} from '../store/action';
+import {changeGenre, showMoreFilms, resetFilmsPerPage, resetGenre, loadFilms} from '../store/action';
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
@@ -22,8 +22,6 @@ export enum ActionType {
 export type Actions =
   | ReturnType<typeof changeGenre>
   | ReturnType<typeof resetGenre>
-  | ReturnType<typeof updateFilmList>
-  | ReturnType<typeof resetFilmList>
   | ReturnType<typeof showMoreFilms>
   | ReturnType<typeof resetFilmsPerPage>
   | ReturnType<typeof loadFilms>;

@@ -5,15 +5,26 @@ import {AppRoute, Links} from '../../const';
 import Tabs from '../tabs/tabs';
 import FilmList from '../film-list/film-list';
 import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import {getSimilarFilms} from '../../utils/films';
 
 type FilmScreenProps = {
   film: Film;
 }
 
-function FilmScreen(props: FilmScreenProps): JSX.Element {
-  const {film} = props;
-  // const SIMILAR_FILMS_COUNT = 4;
-  // const similarFilms = films.filter((element) => element.genre === film.genre && element.id !== film.id).slice(0, SIMILAR_FILMS_COUNT);
+const mapStateToProps = (state: State) => ({
+  films: state.films,
+  filmsPerPageCount: state.filmsPerPageCount,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & FilmScreenProps;
+
+function FilmScreen(props: ConnectedComponentProps): JSX.Element {
+  const {film, films, filmsPerPageCount} = props;
 
   return (
     <>
@@ -86,7 +97,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList />
+          <FilmList films={getSimilarFilms(film, films)} filmsPerPageCount={filmsPerPageCount}/>
         </section>
 
         <footer className="page-footer">
@@ -108,4 +119,4 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
 }
 
 export {FilmScreen};
-export default withNotFoundFilm(FilmScreen);
+export default connector(withNotFoundFilm(FilmScreen));

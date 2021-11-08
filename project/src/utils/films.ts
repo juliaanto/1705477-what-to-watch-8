@@ -1,10 +1,9 @@
 import {ALL_GENRES} from '../const';
-import {films} from '../mocks/films';
 import {Film, Films} from '../types/film';
 
 const SIMILAR_FILMS_COUNT = 4;
 
-export const getFilmsByGenre = (genre: string): Films => {
+export const getFilmsByGenre = (genre: string, films: Films): Films => {
 
   if (genre === ALL_GENRES) {
     return films;
@@ -14,4 +13,6 @@ export const getFilmsByGenre = (genre: string): Films => {
 };
 
 
-export const getSimilarFilms = (currentFilm: Film): Films => films.filter((element) => element.genre === currentFilm.genre && element.id !== currentFilm.id).slice(0, SIMILAR_FILMS_COUNT);
+export const getSimilarFilms = (currentFilm: Film, films: Films): Films => films.filter((element) => element.genre === currentFilm.genre && element.id !== currentFilm.id).slice(0, SIMILAR_FILMS_COUNT);
+
+export const getFavoriteFilms = (films: Films): Films => films.filter((film) => film.isFavorite === true);

@@ -1,19 +1,21 @@
-import {useState} from 'react';
 import Logo from '../logo/logo';
-import {Films} from '../../types/film';
-import FilmCardScreen from '../film-card-screen/film-card-screen';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import FilmList from '../film-list/film-list';
+import {getFavoriteFilms} from '../../utils/films';
 
-type MyListScreenProps = {
-  films: Films;
-}
+const mapStateToProps = (state: State) => ({
+  films: state.films,
+});
 
-function MyListScreen(props: MyListScreenProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function MyListScreen(props: PropsFromRedux): JSX.Element {
   const {films} = props;
-  const favoriteFilms = films.filter((film) => film.isFavorite === true);
-
-  const [activeCard, setActiveCard] = useState({});
 
   return (
     <div className="user-page">
@@ -39,27 +41,8 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__films-list">
-          {favoriteFilms.map((film, id) => {
-            const keyValue = `${id}`;
+        <FilmList films={getFavoriteFilms(films)} filmsPerPageCount={films.length}/>
 
-            return (
-              <article key={keyValue} className="small-film-card catalog__films-card"
-                onMouseEnter={() => {
-                  setActiveCard(film);
-                }}
-                onMouseLeave={() => {
-                  setActiveCard([{}]);
-                }}
-              >
-                <FilmCardScreen
-                  film={film}
-                  isActive={film === activeCard}
-                />
-              </article>
-            );
-          })}
-        </div>
       </section>
 
       <footer className="page-footer">
@@ -79,4 +62,5 @@ function MyListScreen(props: MyListScreenProps): JSX.Element {
   );
 }
 
-export default MyListScreen;
+export {MyListScreen};
+export default connector(MyListScreen);

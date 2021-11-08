@@ -1,6 +1,5 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Film} from '../../types/film';
 import AddReviewScreen from '../add-review-screen/add-review-screen';
 import FilmScreen from '../film-screen/film-screen';
 import MainScreen from '../main-screen/main-screen';
@@ -18,10 +17,9 @@ type AppProps = {
     previewImage: string,
     posterImage: string,
   },
-  films: Film[],
 }
 
-function App({promo, films}: AppProps): JSX.Element {
+function App({promo}: AppProps): JSX.Element {
 
   return (
 
@@ -38,7 +36,7 @@ function App({promo, films}: AppProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MyList}
-          render={() => <MyListScreen films={films}/>}
+          render={() => <MyListScreen />}
           authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>

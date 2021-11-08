@@ -4,8 +4,8 @@ import {Film} from '../../types/film';
 import {useHistory} from 'react-router';
 import TabOverview from '../tab-overview/tab-overview';
 import TabReviews from '../tab-reviews/tab-reviews';
-import { reviews } from '../../mocks/reviews';
-import { Links } from '../../const';
+import {reviews} from '../../mocks/reviews';
+import {Links} from '../../const';
 
 type TabsProps = {
   film: Film;
