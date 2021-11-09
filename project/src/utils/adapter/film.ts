@@ -1,4 +1,4 @@
-import {Film, FilmFromServer, Films, FilmsFromServer} from '../types/film';
+import {Film, FilmFromServer, Films, FilmsFromServer} from '../../types/film';
 
 const adaptFilmToClient = (film: FilmFromServer): Film => ({
   id: film.id,

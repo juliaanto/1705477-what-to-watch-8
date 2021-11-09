@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {APIRoute, AppRoute} from '../../const';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import Logo from '../logo/logo';
@@ -7,16 +7,12 @@ import ShowMore from '../show-more/show-more';
 import {State} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
 import {getFilmsByGenre} from '../../utils/films';
-
-type MainScreenProps = {
-  promo: {
-    name: string,
-    genre: string,
-    released: number,
-    previewImage: string,
-    posterImage: string,
-  },
-}
+import api from '../../services/api';
+import {useEffect, useState} from 'react';
+import {adaptPromoToClient} from '../../utils/adapter/promo';
+import {FilmFromServer} from '../../types/film';
+import {Promo} from '../../types/promo';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const mapStateToProps = (state: State) => ({
   genre: state.genre,
@@ -27,98 +23,110 @@ const mapStateToProps = (state: State) => ({
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
-function MainScreen(props: ConnectedComponentProps): JSX.Element {
-  const {genre, films, promo, filmsPerPageCount} = props;
+function MainScreen(props: PropsFromRedux): JSX.Element {
+  const {genre, films, filmsPerPageCount} = props;
 
-  return (
-    <>
-      <section className="film-card">
-        <div className="film-card__bg">
-          <img src={promo.previewImage} alt={promo.name} />
-        </div>
+  const [appState, setAppState] = useState<Promo>();
 
-        <h1 className="visually-hidden">WTW</h1>
+  useEffect(() => {
+    api.get<FilmFromServer>(APIRoute.Promo).then((response) => setAppState(adaptPromoToClient(response.data)));
+  }, [setAppState]);
 
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <Logo />
+  const promo = appState;
+
+  if (promo === undefined) {
+    return <NotFoundScreen />;
+  } else {
+
+    return (
+      <>
+        <section className="film-card">
+          <div className="film-card__bg">
+            <img src={promo.previewImage} alt={promo.name} />
           </div>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <Link to={AppRoute.MyList}>
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </Link>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-            </li>
-          </ul>
-        </header>
+          <h1 className="visually-hidden">WTW</h1>
 
-        <div className="film-card__wrap">
-          <div className="film-card__info">
-            <div className="film-card__poster">
-              <img src={promo.posterImage} alt={`${promo.name} poster`} width="218" height="327" />
+          <header className="page-header film-card__head">
+            <div className="logo">
+              <Logo />
             </div>
 
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{promo.genre}</span>
-                <span className="film-card__year">{promo.released}</span>
-              </p>
+            <ul className="user-block">
+              <li className="user-block__item">
+                <div className="user-block__avatar">
+                  <Link to={AppRoute.MyList}>
+                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                  </Link>
+                </div>
+              </li>
+              <li className="user-block__item">
+                <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
+              </li>
+            </ul>
+          </header>
 
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+          <div className="film-card__wrap">
+            <div className="film-card__info">
+              <div className="film-card__poster">
+                <img src={promo.posterImage} alt={`${promo.name} poster`} width="218" height="327" />
+              </div>
+
+              <div className="film-card__desc">
+                <h2 className="film-card__title">{promo.name}</h2>
+                <p className="film-card__meta">
+                  <span className="film-card__genre">{promo.genre}</span>
+                  <span className="film-card__year">{promo.released}</span>
+                </p>
+
+                <div className="film-card__buttons">
+                  <button className="btn btn--play film-card__button" type="button">
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>
+                  <button className="btn btn--list film-card__button" type="button">
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg>
+                    <span>My list</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <GenreList />
-
-          <FilmList films={getFilmsByGenre(genre, films)} filmsPerPageCount={filmsPerPageCount}/>
-
-          <ShowMore />
-
         </section>
+        <div className="page-content">
+          <section className="catalog">
+            <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light" href="/">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+            <GenreList />
 
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
-      </div>
-    </>
-  );
+            <FilmList films={getFilmsByGenre(genre, films)} filmsPerPageCount={filmsPerPageCount}/>
+
+            <ShowMore />
+
+          </section>
+
+          <footer className="page-footer">
+            <div className="logo">
+              <a className="logo__link logo__link--light" href="/">
+                <span className="logo__letter logo__letter--1">W</span>
+                <span className="logo__letter logo__letter--2">T</span>
+                <span className="logo__letter logo__letter--3">W</span>
+              </a>
+            </div>
+
+            <div className="copyright">
+              <p>© 2019 What to watch Ltd.</p>
+            </div>
+          </footer>
+        </div>
+      </>
+    );
+  }
 }
 
 export {MainScreen};

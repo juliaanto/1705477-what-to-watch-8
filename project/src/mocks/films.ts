@@ -1,13 +1,5 @@
 import {Film} from '../types/film';
 
-export const PROMO = {
-  name: 'The Grand Budapest Hotel',
-  genre: 'Drama',
-  released: 2014,
-  previewImage: 'img/bg-the-grand-budapest-hotel.jpg',
-  posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
-};
-
 export const films: Film[] = [
   {
     id: 1,

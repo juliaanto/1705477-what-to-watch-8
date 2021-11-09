@@ -1,7 +1,7 @@
 import {APIRoute} from '../const';
 import {ThunkActionResult} from '../types/action';
 import {FilmsFromServer} from '../types/film';
-import { adaptFilmsToClient } from '../utils/adapter';
+import {adaptFilmsToClient} from '../utils/adapter/film';
 import {loadFilms} from './action';
 
 export const fetchFilmsAction = (): ThunkActionResult =>

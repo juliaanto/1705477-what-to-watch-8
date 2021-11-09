@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import App from './components/app/app';
-import {PROMO} from './mocks/films';
 import {reducer} from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import {createAPI} from './services/api';
 import {ThunkAppDispatch} from './types/action';
 import {fetchFilmsAction} from './store/api-actions';
-
-const api = createAPI();
+import api from './services/api';
 
 const store = createStore(
   reducer,
@@ -25,9 +22,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App
-        promo={PROMO}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

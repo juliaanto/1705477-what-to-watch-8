@@ -9,26 +9,14 @@ import PlayerScreen from '../player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
 
-type AppProps = {
-  promo: {
-    name: string,
-    genre: string,
-    released: number,
-    previewImage: string,
-    posterImage: string,
-  },
-}
-
-function App({promo}: AppProps): JSX.Element {
+function App(): JSX.Element {
 
   return (
 
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen
-            promo={promo}
-          />
+          <MainScreen/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <SignInScreen />
