@@ -6,6 +6,7 @@ const initialState = {
   genre: ALL_GENRES,
   films: [],
   filmsPerPageCount: FILMS_PER_PAGE_COUNT,
+  film: {},
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -21,6 +22,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.LoadFilms: {
       const {films} = action.payload;
       return {...state, films};
+    }
+    case ActionType.LoadFilm: {
+      const {currentFilm} = action.payload;
+      return {...state, currentFilm};
     }
     default:
       return state;

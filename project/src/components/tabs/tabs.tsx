@@ -4,8 +4,10 @@ import {Film} from '../../types/film';
 import {useHistory} from 'react-router';
 import TabOverview from '../tab-overview/tab-overview';
 import TabReviews from '../tab-reviews/tab-reviews';
-import {reviews} from '../../mocks/reviews';
-import {Links} from '../../const';
+import {APIRouteById, Links} from '../../const';
+import {Reviews} from '../../types/review';
+import {useEffect, useState} from 'react';
+import api from '../../services/api';
 
 type TabsProps = {
   film: Film;
@@ -13,8 +15,13 @@ type TabsProps = {
 
 function Tabs(props: TabsProps): JSX.Element {
   const {film} = props;
+  const [appState, setAppState] = useState<Reviews>([]);
 
-  const filmReviews = reviews.filter((review) => review.id === film.id);
+  useEffect(() => {
+    api.get<Reviews>(APIRouteById.CommentsByFilmId(film.id)).then((response) => setAppState(response.data));
+  }, [film.id, setAppState]);
+
+  const filmReviews = appState;
 
   const currentPath = useHistory().location.pathname;
 

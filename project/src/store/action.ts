@@ -1,5 +1,5 @@
 import {ActionType} from '../types/action';
-import {Films} from '../types/film';
+import {Film, Films} from '../types/film';
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,
@@ -22,5 +22,12 @@ export const loadFilms = (films: Films) => ({
   type: ActionType.LoadFilms,
   payload: {
     films,
+  },
+} as const);
+
+export const loadFilm = (currentFilm: Film) => ({
+  type: ActionType.LoadFilm,
+  payload: {
+    currentFilm,
   },
 } as const);

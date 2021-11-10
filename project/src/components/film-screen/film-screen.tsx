@@ -1,30 +1,36 @@
 import Logo from '../logo/logo';
-import {Film} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {AppRoute, Links} from '../../const';
 import Tabs from '../tabs/tabs';
 import FilmList from '../film-list/film-list';
-import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
 import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 import {getSimilarFilms} from '../../utils/films';
-
-type FilmScreenProps = {
-  film: Film;
-}
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {useParams} from 'react-router';
+import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {store} from '../..';
+import {ThunkAppDispatch} from '../../types/action';
 
 const mapStateToProps = (state: State) => ({
   films: state.films,
   filmsPerPageCount: state.filmsPerPageCount,
+  film: state.currentFilm,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & FilmScreenProps;
 
-function FilmScreen(props: ConnectedComponentProps): JSX.Element {
+function FilmScreen(props: PropsFromRedux): JSX.Element {
   const {film, films, filmsPerPageCount} = props;
+  const {id} = useParams<{id: string}>();
+
+  (store.dispatch as ThunkAppDispatch)(fetchCurrentFilmAction(Number(id)));
+
+  if (!film) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <>
@@ -116,7 +122,8 @@ function FilmScreen(props: ConnectedComponentProps): JSX.Element {
       </div>
     </>
   );
+
 }
 
 export {FilmScreen};
-export default connector(withNotFoundFilm(FilmScreen));
+export default connector(FilmScreen);

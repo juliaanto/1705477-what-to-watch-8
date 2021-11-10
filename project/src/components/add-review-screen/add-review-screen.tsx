@@ -1,16 +1,32 @@
 import Logo from '../logo/logo';
-import {Film} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {AppRoute, Links} from '../../const';
 import AddReviewForm from '../add-review-form/add-review-form';
-import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {useParams} from 'react-router';
+import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {store} from '../..';
+import {ThunkAppDispatch} from '../../types/action';
 
-type AddReviewScreenProps = {
-  film: Film;
-}
+const mapStateToProps = (state: State) => ({
+  film: state.currentFilm,
+});
 
-function AddReviewScreen(props: AddReviewScreenProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function AddReviewScreen(props: PropsFromRedux): JSX.Element {
   const {film} = props;
+  const {id} = useParams<{id: string}>();
+
+  (store.dispatch as ThunkAppDispatch)(fetchCurrentFilmAction(Number(id)));
+
+  if (!film) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <section className="film-card film-card--full">
@@ -66,4 +82,4 @@ function AddReviewScreen(props: AddReviewScreenProps): JSX.Element {
 }
 
 export {AddReviewScreen};
-export default withNotFoundFilm(AddReviewScreen);
+export default connector(AddReviewScreen);

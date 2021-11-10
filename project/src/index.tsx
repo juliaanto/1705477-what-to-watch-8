@@ -10,7 +10,7 @@ import {ThunkAppDispatch} from './types/action';
 import {fetchFilmsAction} from './store/api-actions';
 import api from './services/api';
 
-const store = createStore(
+export const store = createStore(
   reducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),

@@ -7,7 +7,7 @@ import {
 } from 'axios';
 import {State} from '../types/state';
 
-import {changeGenre, showMoreFilms, resetFilmsPerPage, resetGenre, loadFilms} from '../store/action';
+import {changeGenre, showMoreFilms, resetFilmsPerPage, resetGenre, loadFilms, loadFilm} from '../store/action';
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
@@ -17,6 +17,7 @@ export enum ActionType {
   ShowMoreFilms = 'films/showMoreFilms',
   ResetFilmsPerPage = 'films/resetFilmsPerPage',
   LoadFilms = 'data/loadFilms',
+  LoadFilm = 'data/loadFilm',
 }
 
 export type Actions =
@@ -24,7 +25,8 @@ export type Actions =
   | ReturnType<typeof resetGenre>
   | ReturnType<typeof showMoreFilms>
   | ReturnType<typeof resetFilmsPerPage>
-  | ReturnType<typeof loadFilms>;
+  | ReturnType<typeof loadFilms>
+  | ReturnType<typeof loadFilm>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
