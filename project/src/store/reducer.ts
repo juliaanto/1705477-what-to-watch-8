@@ -7,6 +7,7 @@ const initialState = {
   films: [],
   filmsPerPageCount: FILMS_PER_PAGE_COUNT,
   film: {},
+  isDataLoaded: false,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -21,7 +22,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {...state, filmsPerPageCount: FILMS_PER_PAGE_COUNT};
     case ActionType.LoadFilms: {
       const {films} = action.payload;
-      return {...state, films};
+      return {...state, films, isDataLoaded: true};
     }
     case ActionType.LoadFilm: {
       const {currentFilm} = action.payload;

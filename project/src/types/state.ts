@@ -5,4 +5,5 @@ export type State = {
   films: Films,
   filmsPerPageCount: number,
   currentFilm?: Film,
+  isDataLoaded: boolean,
 };

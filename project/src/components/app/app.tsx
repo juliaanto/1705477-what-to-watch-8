@@ -8,8 +8,26 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PlayerScreen from '../player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-function App(): JSX.Element {
+const mapStateToProps = (state: State) => ({
+  isDataLoaded: state.isDataLoaded,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function App(props: PropsFromRedux): JSX.Element {
+  const {isDataLoaded} = props;
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
 
@@ -45,4 +63,5 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export {App};
+export default connector(App);
