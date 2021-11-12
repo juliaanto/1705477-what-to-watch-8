@@ -1,6 +1,5 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Film} from '../../types/film';
 import AddReviewScreen from '../add-review-screen/add-review-screen';
 import FilmScreen from '../film-screen/film-screen';
 import MainScreen from '../main-screen/main-screen';
@@ -9,29 +8,33 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PlayerScreen from '../player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type AppProps = {
-  promo: {
-    name: string,
-    genre: string,
-    released: number,
-    previewImage: string,
-    posterImage: string,
-  },
-  films: Film[],
-}
+const mapStateToProps = (state: State) => ({
+  isDataLoaded: state.isDataLoaded,
+});
 
-function App({promo, films}: AppProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function App(props: PropsFromRedux): JSX.Element {
+  const {isDataLoaded} = props;
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
 
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen
-            promo={promo}
-            films={films}
-          />
+          <MainScreen/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <SignInScreen />
@@ -39,7 +42,7 @@ function App({promo, films}: AppProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MyList}
-          render={() => <MyListScreen films={films}/>}
+          render={() => <MyListScreen />}
           authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
@@ -60,4 +63,5 @@ function App({promo, films}: AppProps): JSX.Element {
   );
 }
 
-export default App;
+export {App};
+export default connector(App);

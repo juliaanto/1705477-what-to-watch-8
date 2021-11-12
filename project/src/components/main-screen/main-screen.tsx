@@ -1,24 +1,43 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {Films} from '../../types/film';
+import {APIRoute, AppRoute} from '../../const';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import Logo from '../logo/logo';
 import ShowMore from '../show-more/show-more';
+import {State} from '../../types/state';
+import {connect, ConnectedProps} from 'react-redux';
+import {getFilmsByGenre} from '../../utils/films';
+import api from '../../services/api';
+import {useEffect, useState} from 'react';
+import {adaptPromoToClient} from '../../utils/adapter/promo';
+import {FilmFromServer} from '../../types/film';
+import {Promo} from '../../types/promo';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type MainScreenProps = {
-  promo: {
-    name: string,
-    genre: string,
-    released: number,
-    previewImage: string,
-    posterImage: string,
-  },
-  films: Films;
-}
+const mapStateToProps = (state: State) => ({
+  genre: state.genre,
+  films: state.films,
+  filmsPerPageCount: state.filmsPerPageCount,
+});
 
-function MainScreen(props: MainScreenProps): JSX.Element {
-  const {promo, films} = props;
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function MainScreen(props: PropsFromRedux): JSX.Element {
+  const {genre, films, filmsPerPageCount} = props;
+
+  const [appState, setAppState] = useState<Promo>();
+
+  useEffect(() => {
+    api.get<FilmFromServer>(APIRoute.Promo).then((response) => setAppState(adaptPromoToClient(response.data)));
+  }, [setAppState]);
+
+  const promo = appState;
+
+  if (!promo) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
@@ -85,7 +104,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
           <GenreList />
 
-          <FilmList films={films} filmsPerPageCount={8}/>
+          <FilmList films={getFilmsByGenre(genre, films)} filmsPerPageCount={filmsPerPageCount}/>
 
           <ShowMore />
 
@@ -107,7 +126,9 @@ function MainScreen(props: MainScreenProps): JSX.Element {
       </div>
     </>
   );
+
 }
 
-export default MainScreen;
+export {MainScreen};
+export default connector(MainScreen);
 

@@ -7,6 +7,16 @@ export enum AppRoute {
   Player = '/player/:id',
 }
 
+export enum APIRoute {
+  Films = '/films',
+  Promo = '/promo',
+}
+
+export const APIRouteById = {
+  FilmById: ((id: number): string => `/films/${id}`),
+  CommentsByFilmId: ((filmId: number): string => `/comments/${filmId}`),
+};
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

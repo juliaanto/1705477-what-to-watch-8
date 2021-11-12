@@ -5,9 +5,7 @@ import {State} from '../../types/state';
 import {Link} from 'react-router-dom';
 import {Dispatch} from 'redux';
 import {Actions} from '../../types/action';
-import {changeGenre, updateFilmList} from '../../store/action';
-import {getFilmsByGenre} from '../../utils/films';
-import {films as initialFilmList} from '../../mocks/films';
+import {changeGenre} from '../../store/action';
 import {resetFilmsPerPage} from '../../store/action';
 
 type GenreListProps = {
@@ -23,9 +21,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onChangeGenre(genre: string) {
     dispatch(changeGenre(genre));
   },
-  onUpdateFilmList(films: Films) {
-    dispatch(updateFilmList(films));
-  },
   onResetFilmsPerPage() {
     dispatch(resetFilmsPerPage());
   },
@@ -37,10 +32,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & GenreListProps;
 
 function GenreList(props: ConnectedComponentProps): JSX.Element {
-  const {genre, onChangeGenre, onUpdateFilmList, onResetFilmsPerPage} = props;
+  const {genre, films, onChangeGenre, onResetFilmsPerPage} = props;
 
   const genresFromFilms = (allFilms: Films): string[] => [...new Set(allFilms.map((film) => film.genre))];
-  const genresList = [ALL_GENRES, ...genresFromFilms(initialFilmList)];
+  const genresList = [ALL_GENRES, ...genresFromFilms(films)];
 
   return (
     <ul className="catalog__genres-list">
@@ -51,7 +46,6 @@ function GenreList(props: ConnectedComponentProps): JSX.Element {
           <li key={keyValue} className={`catalog__genres-item ${genre === item ? 'catalog__genres-item--active' : ''} `}
             onClick={() => {
               onChangeGenre(item);
-              onUpdateFilmList(getFilmsByGenre(item));
               onResetFilmsPerPage();
             }}
           >

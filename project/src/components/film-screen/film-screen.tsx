@@ -1,20 +1,36 @@
 import Logo from '../logo/logo';
-import {Film} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {AppRoute, Links} from '../../const';
 import Tabs from '../tabs/tabs';
 import FilmList from '../film-list/film-list';
-import {films} from '../../mocks/films';
-import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import {getSimilarFilms} from '../../utils/films';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {useParams} from 'react-router';
+import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {store} from '../..';
+import {ThunkAppDispatch} from '../../types/action';
 
-type FilmScreenProps = {
-  film: Film;
-}
+const mapStateToProps = (state: State) => ({
+  films: state.films,
+  filmsPerPageCount: state.filmsPerPageCount,
+  film: state.currentFilm,
+});
 
-function FilmScreen(props: FilmScreenProps): JSX.Element {
-  const {film} = props;
-  const SIMILAR_FILMS_COUNT = 4;
-  const similarFilms = films.filter((element) => element.genre === film.genre && element.id !== film.id).slice(0, SIMILAR_FILMS_COUNT);
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function FilmScreen(props: PropsFromRedux): JSX.Element {
+  const {film, films, filmsPerPageCount} = props;
+  const {id} = useParams<{id: string}>();
+
+  (store.dispatch as ThunkAppDispatch)(fetchCurrentFilmAction(Number(id)));
+
+  if (!film) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <>
@@ -87,7 +103,7 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={similarFilms} filmsPerPageCount={SIMILAR_FILMS_COUNT}/>
+          <FilmList films={getSimilarFilms(film, films)} filmsPerPageCount={filmsPerPageCount}/>
         </section>
 
         <footer className="page-footer">
@@ -106,7 +122,8 @@ function FilmScreen(props: FilmScreenProps): JSX.Element {
       </div>
     </>
   );
+
 }
 
 export {FilmScreen};
-export default withNotFoundFilm(FilmScreen);
+export default connector(FilmScreen);

@@ -1,18 +1,34 @@
 import {Link} from 'react-router-dom';
 import {Links} from '../../const';
-import {Film} from '../../types/film';
-import withNotFoundFilm from '../with-not-found-film/with-not-found-film';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {useParams} from 'react-router';
+import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {store} from '../..';
+import {ThunkAppDispatch} from '../../types/action';
 
-type PlayerScreenProps = {
-  film: Film;
-}
+const mapStateToProps = (state: State) => ({
+  film: state.currentFilm,
+});
 
-function PlayerScreen(props: PlayerScreenProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function PlayerScreen(props: PropsFromRedux): JSX.Element {
   const {film} = props;
+  const {id} = useParams<{id: string}>();
+
+  (store.dispatch as ThunkAppDispatch)(fetchCurrentFilmAction(Number(id)));
 
   const playerStyle = {
     left: '30%',
   };
+
+  if (!film) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <div className="player">
@@ -48,7 +64,8 @@ function PlayerScreen(props: PlayerScreenProps): JSX.Element {
       </div>
     </div>
   );
+
 }
 
 export {PlayerScreen};
-export default withNotFoundFilm(PlayerScreen);
+export default connector(PlayerScreen);
