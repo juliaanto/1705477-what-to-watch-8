@@ -46,9 +46,12 @@ function App(props: PropsFromRedux): JSX.Element {
           render={() => <MyListScreen />}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.AddReview}>
-          <AddReviewScreen />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.AddReview}
+          render={() => <AddReviewScreen />}
+        >
+        </PrivateRoute>
         <Route path={AppRoute.Film}>
           <FilmScreen />
         </Route>
