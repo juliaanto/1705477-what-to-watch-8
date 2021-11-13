@@ -3,11 +3,20 @@ import {
   ThunkDispatch
 } from 'redux-thunk';
 import {
+  changeGenre,
+  loadFilm,
+  loadFilms,
+  requireAuthorization,
+  requireLogout,
+  resetFilmsPerPage,
+  resetGenre,
+  showMoreFilms
+} from '../store/action';
+
+import {
   AxiosInstance
 } from 'axios';
 import {State} from '../types/state';
-
-import {changeGenre, showMoreFilms, resetFilmsPerPage, resetGenre, loadFilms, loadFilm} from '../store/action';
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
@@ -18,6 +27,8 @@ export enum ActionType {
   ResetFilmsPerPage = 'films/resetFilmsPerPage',
   LoadFilms = 'data/loadFilms',
   LoadFilm = 'data/loadFilm',
+  RequireAuthorization = 'user/requireAuthorization',
+  RequireLogout = 'user/requireLogout',
 }
 
 export type Actions =
@@ -26,7 +37,9 @@ export type Actions =
   | ReturnType<typeof showMoreFilms>
   | ReturnType<typeof resetFilmsPerPage>
   | ReturnType<typeof loadFilms>
-  | ReturnType<typeof loadFilm>;
+  | ReturnType<typeof loadFilm>
+  | ReturnType<typeof requireAuthorization>
+  | ReturnType<typeof requireLogout>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

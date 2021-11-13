@@ -1,6 +1,7 @@
-import {ALL_GENRES, FILMS_PER_PAGE_COUNT} from '../const';
+import {ALL_GENRES, AuthorizationStatus, FILMS_PER_PAGE_COUNT} from '../const';
+import {ActionType, Actions} from '../types/action';
+
 import {State} from '../types/state';
-import {Actions, ActionType} from '../types/action';
 
 const initialState = {
   genre: ALL_GENRES,
@@ -8,6 +9,7 @@ const initialState = {
   filmsPerPageCount: FILMS_PER_PAGE_COUNT,
   film: {},
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -28,6 +30,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
       const {currentFilm} = action.payload;
       return {...state, currentFilm};
     }
+    case ActionType.RequireAuthorization:
+      return {...state, authorizationStatus: action.payload};
+    case ActionType.RequireLogout:
+      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
     default:
       return state;
   }
