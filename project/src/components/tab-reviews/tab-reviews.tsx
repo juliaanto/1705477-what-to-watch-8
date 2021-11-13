@@ -1,5 +1,5 @@
-import {Reviews} from '../../types/review';
 import ReviewItem from '../review-item.tsx/review-item';
+import {Reviews} from '../../types/review';
 
 type TabReviewsProps = {
   reviews: Reviews;

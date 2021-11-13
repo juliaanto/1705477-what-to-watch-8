@@ -1,13 +1,14 @@
-import {Link} from 'react-router-dom';
-import TabDetails from '../tab-details/tab-details';
+import {APIRouteById, Links} from '../../const';
+import {useEffect, useState} from 'react';
+
 import {Film} from '../../types/film';
-import {useHistory} from 'react-router';
+import {Link} from 'react-router-dom';
+import {Reviews} from '../../types/review';
+import TabDetails from '../tab-details/tab-details';
 import TabOverview from '../tab-overview/tab-overview';
 import TabReviews from '../tab-reviews/tab-reviews';
-import {APIRouteById, Links} from '../../const';
-import {Reviews} from '../../types/review';
-import {useEffect, useState} from 'react';
 import api from '../../services/api';
+import {useHistory} from 'react-router';
 
 type TabsProps = {
   film: Film;

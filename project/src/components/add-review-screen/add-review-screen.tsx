@@ -1,28 +1,34 @@
-import Logo from '../logo/logo';
-import {Link} from 'react-router-dom';
 import {AppRoute, Links} from '../../const';
+import {ConnectedProps, connect} from 'react-redux';
+
 import AddReviewForm from '../add-review-form/add-review-form';
-import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
+import {Link} from 'react-router-dom';
+import Logo from '../logo/logo';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {useParams} from 'react-router';
-import {fetchCurrentFilmAction} from '../../store/api-actions';
-import {store} from '../..';
+import {State} from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
+import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {useParams} from 'react-router';
 
 const mapStateToProps = (state: State) => ({
   film: state.currentFilm,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  fetchCurrentFilm(id: number) {
+    dispatch(fetchCurrentFilmAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function AddReviewScreen(props: PropsFromRedux): JSX.Element {
-  const {film} = props;
+  const {film, fetchCurrentFilm} = props;
   const {id} = useParams<{id: string}>();
 
-  (store.dispatch as ThunkAppDispatch)(fetchCurrentFilmAction(Number(id)));
+  fetchCurrentFilm(Number(id));
 
   if (!film) {
     return <NotFoundScreen />;

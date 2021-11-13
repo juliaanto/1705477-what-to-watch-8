@@ -1,5 +1,6 @@
-import {ActionType} from '../types/action';
 import {Film, Films} from '../types/film';
+
+import {ActionType} from '../types/action';
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,

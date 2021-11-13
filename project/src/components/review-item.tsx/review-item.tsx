@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
 import {Review} from '../../types/review';
+import dayjs from 'dayjs';
 
 type ReviewItemProps = {
   review: Review;

@@ -1,9 +1,10 @@
-import Logo from '../logo/logo';
-import {Link} from 'react-router-dom';
+import {ConnectedProps, connect} from 'react-redux';
+
 import {AppRoute} from '../../const';
-import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
 import FilmList from '../film-list/film-list';
+import {Link} from 'react-router-dom';
+import Logo from '../logo/logo';
+import {State} from '../../types/state';
 import {getFavoriteFilms} from '../../utils/films';
 
 const mapStateToProps = (state: State) => ({

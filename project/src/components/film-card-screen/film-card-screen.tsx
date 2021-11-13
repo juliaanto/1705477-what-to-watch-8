@@ -1,7 +1,7 @@
-import {Link} from 'react-router-dom';
 import {Film} from '../../types/film';
-import VideoPlayer from '../video-player/video-player';
+import {Link} from 'react-router-dom';
 import {Links} from '../../const';
+import VideoPlayer from '../video-player/video-player';
 
 type FilmCardScreenProps = {
   film: Film;

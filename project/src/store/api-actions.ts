@@ -1,8 +1,9 @@
 import {APIRoute, APIRouteById} from '../const';
-import {ThunkActionResult} from '../types/action';
 import {FilmFromServer, FilmsFromServer} from '../types/film';
-import {adaptFilmsToClient, adaptFilmToClient} from '../utils/adapter/film';
+import {adaptFilmToClient, adaptFilmsToClient} from '../utils/adapter/film';
 import {loadFilm, loadFilms} from './action';
+
+import {ThunkActionResult} from '../types/action';
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
