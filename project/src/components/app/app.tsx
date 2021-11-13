@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
 import {ConnectedProps, connect} from 'react-redux';
 
 import AddReviewScreen from '../add-review-screen/add-review-screen';
@@ -12,6 +12,7 @@ import PlayerScreen from '../player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
 import {State} from '../../types/state';
+import browserHistory from '../../browser-history';
 
 const mapStateToProps = (state: State) => ({
   isDataLoaded: state.isDataLoaded,
@@ -32,7 +33,7 @@ function App(props: PropsFromRedux): JSX.Element {
 
   return (
 
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainScreen/>

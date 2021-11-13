@@ -3,17 +3,25 @@ import {ConnectedProps, connect} from 'react-redux';
 
 import {Link} from 'react-router-dom';
 import {State} from '../../types/state';
+import {ThunkAppDispatch} from '../../types/action';
+import {logoutAction} from '../../store/api-actions';
 
 const mapStateToProps = (state: State) => ({
   authorizationStatus: state.authorizationStatus,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  signOut() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function UserBlock(props: PropsFromRedux): JSX.Element {
-  const {authorizationStatus} = props;
+  const {authorizationStatus, signOut} = props;
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return (
@@ -26,7 +34,16 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
           </div>
         </li>
         <li className="user-block__item">
-          <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
+          <Link to={AppRoute.SignIn}
+            className="user-block__link"
+            onClick={(evt) => {
+              evt.preventDefault();
+
+              signOut();
+            }}
+          >
+            Sign out
+          </Link>
         </li>
       </ul>
     );

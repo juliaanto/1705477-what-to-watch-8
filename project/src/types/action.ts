@@ -6,6 +6,7 @@ import {
   changeGenre,
   loadFilm,
   loadFilms,
+  redirectToRoute,
   requireAuthorization,
   requireLogout,
   resetFilmsPerPage,
@@ -29,6 +30,7 @@ export enum ActionType {
   LoadFilm = 'data/loadFilm',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
+  RedirectToRoute = 'films/redirectToRoute'
 }
 
 export type Actions =
@@ -39,7 +41,8 @@ export type Actions =
   | ReturnType<typeof loadFilms>
   | ReturnType<typeof loadFilm>
   | ReturnType<typeof requireAuthorization>
-  | ReturnType<typeof requireLogout>;
+  | ReturnType<typeof requireLogout>
+  | ReturnType<typeof redirectToRoute>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
