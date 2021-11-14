@@ -8,6 +8,7 @@ import {logoutAction} from '../../store/api-actions';
 
 const mapStateToProps = (state: State) => ({
   authorizationStatus: state.authorizationStatus,
+  userAvatar: state.userAvatar,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -21,7 +22,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function UserBlock(props: PropsFromRedux): JSX.Element {
-  const {authorizationStatus, signOut} = props;
+  const {authorizationStatus, signOut, userAvatar} = props;
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return (
@@ -29,7 +30,7 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
         <li className="user-block__item">
           <div className="user-block__avatar">
             <Link to={AppRoute.MyList}>
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <img src={userAvatar} alt="User avatar" width="63" height="63" />
             </Link>
           </div>
         </li>

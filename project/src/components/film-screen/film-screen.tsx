@@ -1,13 +1,14 @@
-import {AppRoute, Links} from '../../const';
 import {ConnectedProps, connect} from 'react-redux';
 
 import FilmList from '../film-list/film-list';
 import {Link} from 'react-router-dom';
+import {Links} from '../../const';
 import Logo from '../logo/logo';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {State} from '../../types/state';
 import Tabs from '../tabs/tabs';
 import {ThunkAppDispatch} from '../../types/action';
+import UserBlock from '../user-block/user-block';
 import {fetchCurrentFilmAction} from '../../store/api-actions';
 import {getSimilarFilms} from '../../utils/films';
 import {useParams} from 'react-router';
@@ -53,18 +54,8 @@ function FilmScreen(props: PropsFromRedux): JSX.Element {
               <Logo />
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <Link to={AppRoute.MyList}>
-                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                  </Link>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-              </li>
-            </ul>
+            <UserBlock />
+
           </header>
 
           <div className="film-card__wrap">

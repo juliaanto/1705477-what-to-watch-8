@@ -9,4 +9,5 @@ export type State = {
   currentFilm?: Film,
   isDataLoaded: boolean,
   authorizationStatus: AuthorizationStatus,
+  userAvatar: string,
 };

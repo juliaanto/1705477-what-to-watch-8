@@ -47,3 +47,12 @@ export const redirectToRoute = (url: AppRoute) => ({
   type: ActionType.RedirectToRoute,
   payload: url,
 } as const);
+
+export const saveUserAvatar = (userAvatar: string) => ({
+  type: ActionType.SaveUserAvatar,
+  payload: userAvatar,
+} as const);
+
+export const dropUserAvatar = () => ({
+  type: ActionType.DropUserAvatar,
+} as const);

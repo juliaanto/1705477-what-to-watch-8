@@ -1,11 +1,13 @@
 import {APIRoute, APIRouteById, AppRoute, AuthorizationStatus} from '../const';
 import {FilmFromServer, FilmsFromServer} from '../types/film';
-import {Token, dropToken, saveToken} from '../services/token';
 import {adaptFilmToClient, adaptFilmsToClient} from '../utils/adapter/film';
-import {loadFilm, loadFilms, redirectToRoute, requireAuthorization, requireLogout} from './action';
+import {dropToken, saveToken} from '../services/token';
+import {dropUserAvatar, loadFilm, loadFilms, redirectToRoute, requireAuthorization, requireLogout, saveUserAvatar} from './action';
 
 import {AuthData} from '../types/auth-data';
+import {AuthInfoFromServer} from '../types/auth-info';
 import {ThunkActionResult} from '../types/action';
+import {adaptAuthInfoToClient} from '../utils/adapter/auth-info';
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -27,10 +29,12 @@ export const checkAuthAction = (): ThunkActionResult =>
 
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const dataFromServer = await api.post<AuthInfoFromServer>(APIRoute.Login, {email, password});
+    const adaptedAuthInfo = adaptAuthInfoToClient(dataFromServer.data);
+    saveToken(adaptedAuthInfo.token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
+    dispatch(saveUserAvatar(adaptedAuthInfo.avatarUrl));
   };
 
 export const logoutAction = (): ThunkActionResult =>
@@ -38,4 +42,5 @@ export const logoutAction = (): ThunkActionResult =>
     api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireLogout());
+    dispatch(dropUserAvatar());
   };

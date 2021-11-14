@@ -10,6 +10,7 @@ const initialState = {
   film: {},
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  userAvatar: '',
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -34,6 +35,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {...state, authorizationStatus: action.payload};
     case ActionType.RequireLogout:
       return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
+    case ActionType.SaveUserAvatar:
+      return {...state, userAvatar: action.payload};
+    case ActionType.DropUserAvatar:
+      return {...state, userAvatar: ''};
     default:
       return state;
   }

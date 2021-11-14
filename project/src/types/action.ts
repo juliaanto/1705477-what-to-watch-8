@@ -4,6 +4,7 @@ import {
 } from 'redux-thunk';
 import {
   changeGenre,
+  dropUserAvatar,
   loadFilm,
   loadFilms,
   redirectToRoute,
@@ -11,6 +12,7 @@ import {
   requireLogout,
   resetFilmsPerPage,
   resetGenre,
+  saveUserAvatar,
   showMoreFilms
 } from '../store/action';
 
@@ -30,7 +32,9 @@ export enum ActionType {
   LoadFilm = 'data/loadFilm',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
-  RedirectToRoute = 'films/redirectToRoute'
+  RedirectToRoute = 'films/redirectToRoute',
+  SaveUserAvatar = 'data/saveUserAvatar',
+  DropUserAvatar = 'data/dropUserAvatar',
 }
 
 export type Actions =
@@ -42,7 +46,9 @@ export type Actions =
   | ReturnType<typeof loadFilm>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof requireLogout>
-  | ReturnType<typeof redirectToRoute>;
+  | ReturnType<typeof redirectToRoute>
+  | ReturnType<typeof saveUserAvatar>
+  | ReturnType<typeof dropUserAvatar>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
