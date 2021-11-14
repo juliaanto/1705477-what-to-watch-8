@@ -1,20 +1,24 @@
+import {APIRouteById, Links} from '../../const';
 import {ConnectedProps, connect} from 'react-redux';
+import { Films, FilmsFromServer } from '../../types/film';
+import {useEffect, useState} from 'react';
 
 import FilmList from '../film-list/film-list';
 import {Link} from 'react-router-dom';
-import {Links} from '../../const';
 import Logo from '../logo/logo';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {State} from '../../types/state';
 import Tabs from '../tabs/tabs';
 import {ThunkAppDispatch} from '../../types/action';
 import UserBlock from '../user-block/user-block';
+import { adaptFilmsToClient } from '../../utils/adapter/film';
+import api from '../../services/api';
 import {fetchCurrentFilmAction} from '../../store/api-actions';
-import {getSimilarFilms} from '../../utils/films';
 import {useParams} from 'react-router';
 
+const SIMILAR_FILMS_COUNT = 4;
+
 const mapStateToProps = (state: State) => ({
-  films: state.films,
   filmsPerPageCount: state.filmsPerPageCount,
   film: state.currentFilm,
 });
@@ -30,10 +34,18 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function FilmScreen(props: PropsFromRedux): JSX.Element {
-  const {film, films, filmsPerPageCount, fetchCurrentFilm} = props;
+  const {film, filmsPerPageCount, fetchCurrentFilm} = props;
   const {id} = useParams<{id: string}>();
 
   fetchCurrentFilm(Number(id));
+
+  const [appState, setAppState] = useState<Films>([]);
+
+  useEffect(() => {
+    api.get<FilmsFromServer>(APIRouteById.SimilarFilmsById(Number(id))).then((response) => setAppState(adaptFilmsToClient(response.data)));
+  }, [id, setAppState]);
+
+  const similarFilms = appState.slice(0, SIMILAR_FILMS_COUNT);
 
   if (!film) {
     return <NotFoundScreen />;
@@ -100,7 +112,7 @@ function FilmScreen(props: PropsFromRedux): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={getSimilarFilms(film, films)} filmsPerPageCount={filmsPerPageCount}/>
+          <FilmList films={similarFilms} filmsPerPageCount={filmsPerPageCount}/>
         </section>
 
         <footer className="page-footer">

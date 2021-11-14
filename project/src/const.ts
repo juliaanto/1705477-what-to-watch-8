@@ -18,6 +18,7 @@ export enum APIRoute {
 export const APIRouteById = {
   FilmById: ((id: number): string => `/films/${id}`),
   CommentsByFilmId: ((filmId: number): string => `/comments/${filmId}`),
+  SimilarFilmsById: ((filmId: number): string => `/films/${filmId}/similar`),
 };
 
 export enum AuthorizationStatus {
