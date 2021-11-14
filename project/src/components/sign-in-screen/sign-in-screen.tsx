@@ -3,8 +3,13 @@ import {FormEvent, useRef} from 'react';
 
 import {AuthData} from '../../types/auth-data';
 import Logo from '../logo/logo';
+import {State} from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
 import {loginAction} from '../../store/api-actions';
+
+const mapStateToProps = (state: State) => ({
+  loginError: state.loginError,
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
@@ -12,12 +17,12 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function SignInScreen(props: PropsFromRedux): JSX.Element {
-  const {onSubmit} = props;
+  const {onSubmit, loginError} = props;
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -47,6 +52,13 @@ function SignInScreen(props: PropsFromRedux): JSX.Element {
         <form action="" className="sign-in__form"
           onSubmit={handleSubmit}
         >
+
+          {loginError ?
+            <div className="sign-in__message">
+              <p>{loginError}</p>
+            </div>
+            : ''}
+
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input

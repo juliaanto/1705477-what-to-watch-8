@@ -11,6 +11,7 @@ const initialState = {
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userAvatar: '',
+  loginError: undefined,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -39,6 +40,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {...state, userAvatar: action.payload};
     case ActionType.DropUserAvatar:
       return {...state, userAvatar: ''};
+    case ActionType.SetLoginError:
+      return {...state, loginError: action.payload};
     default:
       return state;
   }

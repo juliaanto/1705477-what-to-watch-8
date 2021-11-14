@@ -10,4 +10,5 @@ export type State = {
   isDataLoaded: boolean,
   authorizationStatus: AuthorizationStatus,
   userAvatar: string,
+  loginError?: string,
 };

@@ -13,6 +13,7 @@ import {
   resetFilmsPerPage,
   resetGenre,
   saveUserAvatar,
+  setLoginError,
   showMoreFilms
 } from '../store/action';
 
@@ -35,6 +36,7 @@ export enum ActionType {
   RedirectToRoute = 'films/redirectToRoute',
   SaveUserAvatar = 'data/saveUserAvatar',
   DropUserAvatar = 'data/dropUserAvatar',
+  SetLoginError = 'uesr/setLoginError',
 }
 
 export type Actions =
@@ -48,7 +50,8 @@ export type Actions =
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof saveUserAvatar>
-  | ReturnType<typeof dropUserAvatar>;
+  | ReturnType<typeof dropUserAvatar>
+  | ReturnType<typeof setLoginError>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

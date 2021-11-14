@@ -2,39 +2,70 @@ import {APIRoute, APIRouteById, AppRoute, AuthorizationStatus} from '../const';
 import {FilmFromServer, FilmsFromServer} from '../types/film';
 import {adaptFilmToClient, adaptFilmsToClient} from '../utils/adapter/film';
 import {dropToken, saveToken} from '../services/token';
-import {dropUserAvatar, loadFilm, loadFilms, redirectToRoute, requireAuthorization, requireLogout, saveUserAvatar} from './action';
+import {dropUserAvatar, loadFilm, loadFilms, redirectToRoute, requireAuthorization, requireLogout, saveUserAvatar, setLoginError} from './action';
 
 import {AuthData} from '../types/auth-data';
 import {AuthInfoFromServer} from '../types/auth-info';
+import {HttpCode} from '../services/api';
 import {ThunkActionResult} from '../types/action';
 import {adaptAuthInfoToClient} from '../utils/adapter/auth-info';
+import axios from 'axios';
+import {getLoginError} from '../utils/auth-errors';
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmsFromServer>(APIRoute.Films);
-    dispatch(loadFilms(adaptFilmsToClient(data)));
+    try {
+      const {data} = await api.get<FilmsFromServer>(APIRoute.Films);
+      dispatch(loadFilms(adaptFilmsToClient(data)));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.NotFound) {
+          dispatch(redirectToRoute(AppRoute.NotFound));
+        }
+      }
+    }
   };
 
 export const fetchCurrentFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmFromServer>(APIRouteById.FilmById(filmId));
-    dispatch(loadFilm(adaptFilmToClient(data)));
+    try {
+      const {data} = await api.get<FilmFromServer>(APIRouteById.FilmById(filmId));
+      dispatch(loadFilm(adaptFilmToClient(data)));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.NotFound) {
+          dispatch(redirectToRoute(AppRoute.NotFound));
+        }
+      }
+    }
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+    }
   };
 
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const dataFromServer = await api.post<AuthInfoFromServer>(APIRoute.Login, {email, password});
-    const adaptedAuthInfo = adaptAuthInfoToClient(dataFromServer.data);
-    saveToken(adaptedAuthInfo.token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
-    dispatch(saveUserAvatar(adaptedAuthInfo.avatarUrl));
+    try {
+      const dataFromServer = await api.post<AuthInfoFromServer>(APIRoute.Login, {email, password});
+      const adaptedAuthInfo = adaptAuthInfoToClient(dataFromServer.data);
+      saveToken(adaptedAuthInfo.token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+      dispatch(saveUserAvatar(adaptedAuthInfo.avatarUrl));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.BadRequest) {
+          dispatch(setLoginError(getLoginError(email, password)));
+        }
+      }
+    }
   };
 
 export const logoutAction = (): ThunkActionResult =>

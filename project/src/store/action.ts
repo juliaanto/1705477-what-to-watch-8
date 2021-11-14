@@ -56,3 +56,8 @@ export const saveUserAvatar = (userAvatar: string) => ({
 export const dropUserAvatar = () => ({
   type: ActionType.DropUserAvatar,
 } as const);
+
+export const setLoginError = (loginError: string) => ({
+  type: ActionType.SetLoginError,
+  payload: loginError,
+} as const);

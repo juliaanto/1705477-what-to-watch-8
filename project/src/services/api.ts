@@ -5,11 +5,13 @@ import {getToken} from './token';
 import {requireAuthorization} from '../store/action';
 import {store} from '..';
 
-const BACKEND_URL = 'https://7.react.pages.academy/wtw';
+const BACKEND_URL = 'https://8.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
 
-enum HttpCode {
+export enum HttpCode {
+  BadRequest = 400,
   Unauthorized = 401,
+  NotFound = 404,
 }
 
 type UnauthorizedCallback = () => void;

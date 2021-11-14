@@ -1,5 +1,4 @@
 import {applyMiddleware, createStore} from 'redux';
-import {checkAuthAction, fetchFilmsAction} from './store/api-actions';
 
 import App from './components/app/app';
 import {Provider} from 'react-redux';
@@ -8,6 +7,7 @@ import ReactDOM from 'react-dom';
 import {ThunkAppDispatch} from './types/action';
 import api from './services/api';
 import {composeWithDevTools} from 'redux-devtools-extension';
+import {fetchFilmsAction} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
 import {reducer} from './store/reducer';
 import thunk from 'redux-thunk';
@@ -20,7 +20,6 @@ export const store = createStore(
   ),
 );
 
-(store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
 
 ReactDOM.render(
