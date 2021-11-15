@@ -1,4 +1,4 @@
-import {APIRouteById, Links} from '../../const';
+import {APIRouteById, AuthorizationStatus, Links} from '../../const';
 import {ConnectedProps, connect} from 'react-redux';
 import { Films, FilmsFromServer } from '../../types/film';
 import {useEffect, useState} from 'react';
@@ -21,6 +21,7 @@ const SIMILAR_FILMS_COUNT = 4;
 const mapStateToProps = (state: State) => ({
   filmsPerPageCount: state.filmsPerPageCount,
   film: state.currentFilm,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -34,7 +35,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function FilmScreen(props: PropsFromRedux): JSX.Element {
-  const {film, filmsPerPageCount, fetchCurrentFilm} = props;
+  const {film, filmsPerPageCount, fetchCurrentFilm, authorizationStatus} = props;
   const {id} = useParams<{id: string}>();
 
   fetchCurrentFilm(Number(id));
@@ -91,7 +92,9 @@ function FilmScreen(props: PropsFromRedux): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={Links.AddReviewByFilmId(film.id)} className="btn film-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <Link to={Links.AddReviewByFilmId(film.id)} className="btn film-card__button">Add review</Link>
+                  : ''}
               </div>
             </div>
           </div>
