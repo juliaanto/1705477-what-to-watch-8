@@ -1,7 +1,7 @@
-import {AppRoute, AuthorizationStatus} from '../const';
 import {Film, Films} from '../types/film';
 
 import {ActionType} from '../types/action';
+import {AuthorizationStatus} from '../const';
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,
@@ -43,7 +43,7 @@ export const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
-export const redirectToRoute = (url: AppRoute) => ({
+export const redirectToRoute = (url: string) => ({
   type: ActionType.RedirectToRoute,
   payload: url,
 } as const);
