@@ -1,10 +1,11 @@
 import {ALL_GENRES, AppRoute} from '../../const';
-import {Films} from '../../types/film';
-import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
-import {Link} from 'react-router-dom';
-import {Dispatch} from 'redux';
+import {ConnectedProps, connect} from 'react-redux';
+
 import {Actions} from '../../types/action';
+import {Dispatch} from 'redux';
+import {Films} from '../../types/film';
+import {Link} from 'react-router-dom';
+import {State} from '../../types/state';
 import {changeGenre} from '../../store/action';
 import {resetFilmsPerPage} from '../../store/action';
 

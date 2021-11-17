@@ -1,16 +1,17 @@
-import Logo from '../logo/logo';
-import {Link} from 'react-router-dom';
-import {AppRoute, Links} from '../../const';
-import Tabs from '../tabs/tabs';
+import {ConnectedProps, connect} from 'react-redux';
+
 import FilmList from '../film-list/film-list';
-import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
-import {getSimilarFilms} from '../../utils/films';
+import {Link} from 'react-router-dom';
+import {Links} from '../../const';
+import Logo from '../logo/logo';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {useParams} from 'react-router';
-import {fetchCurrentFilmAction} from '../../store/api-actions';
-import {store} from '../..';
+import {State} from '../../types/state';
+import Tabs from '../tabs/tabs';
 import {ThunkAppDispatch} from '../../types/action';
+import UserBlock from '../user-block/user-block';
+import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {getSimilarFilms} from '../../utils/films';
+import {useParams} from 'react-router';
 
 const mapStateToProps = (state: State) => ({
   films: state.films,
@@ -18,15 +19,21 @@ const mapStateToProps = (state: State) => ({
   film: state.currentFilm,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  fetchCurrentFilm(id: number) {
+    dispatch(fetchCurrentFilmAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function FilmScreen(props: PropsFromRedux): JSX.Element {
-  const {film, films, filmsPerPageCount} = props;
+  const {film, films, filmsPerPageCount, fetchCurrentFilm} = props;
   const {id} = useParams<{id: string}>();
 
-  (store.dispatch as ThunkAppDispatch)(fetchCurrentFilmAction(Number(id)));
+  fetchCurrentFilm(Number(id));
 
   if (!film) {
     return <NotFoundScreen />;
@@ -47,18 +54,8 @@ function FilmScreen(props: PropsFromRedux): JSX.Element {
               <Logo />
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <Link to={AppRoute.MyList}>
-                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                  </Link>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-              </li>
-            </ul>
+            <UserBlock />
+
           </header>
 
           <div className="film-card__wrap">

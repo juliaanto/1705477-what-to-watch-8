@@ -1,9 +1,9 @@
-import Logo from '../logo/logo';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
+import {ConnectedProps, connect} from 'react-redux';
+
 import FilmList from '../film-list/film-list';
+import Logo from '../logo/logo';
+import {State} from '../../types/state';
+import UserBlock from '../user-block/user-block';
 import {getFavoriteFilms} from '../../utils/films';
 
 const mapStateToProps = (state: State) => ({
@@ -26,16 +26,8 @@ function MyListScreen(props: PropsFromRedux): JSX.Element {
 
         <h1 className="page-title user-page__title">My list</h1>
 
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-          </li>
-        </ul>
+        <UserBlock />
+
       </header>
 
       <section className="catalog">

@@ -1,9 +1,10 @@
-import {Link} from 'react-router-dom';
+import {ConnectedProps, connect} from 'react-redux';
+import {resetFilmsPerPage, resetGenre} from '../../store/action';
+
+import {Actions} from '../../types/action';
 import {AppRoute} from '../../const';
 import {Dispatch} from 'redux';
-import {Actions} from '../../types/action';
-import {connect, ConnectedProps} from 'react-redux';
-import {resetFilmsPerPage, resetGenre} from '../../store/action';
+import {Link} from 'react-router-dom';
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onResetGenre() {

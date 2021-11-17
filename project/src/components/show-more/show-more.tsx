@@ -1,10 +1,11 @@
-import {State} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
-import {Films} from '../../types/film';
-import {Dispatch} from 'redux';
-import {Actions} from '../../types/action';
-import {showMoreFilms} from '../../store/action';
+import { ConnectedProps, connect } from 'react-redux';
+
+import { Actions } from '../../types/action';
+import { Dispatch } from 'redux';
+import { Films } from '../../types/film';
+import { State } from '../../types/state';
 import { getFilmsByGenre } from '../../utils/films';
+import { showMoreFilms } from '../../store/action';
 
 type ShowMoreProps = {
   films: Films;
@@ -29,7 +30,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & ShowMoreProps;
 
 function ShowMore(props: ConnectedComponentProps): JSX.Element {
-  const {films, filmsPerPageCount, genre, onShowMoreFilms} = props;
+  const { films, filmsPerPageCount, genre, onShowMoreFilms } = props;
 
   if (getFilmsByGenre(genre, films).length > filmsPerPageCount) {
     return (
@@ -51,5 +52,5 @@ function ShowMore(props: ConnectedComponentProps): JSX.Element {
   }
 }
 
-export {ShowMore};
+export { ShowMore };
 export default connector(ShowMore);

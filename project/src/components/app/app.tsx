@@ -1,16 +1,18 @@
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
+import {ConnectedProps, connect} from 'react-redux';
+
 import AddReviewScreen from '../add-review-screen/add-review-screen';
+import {AppRoute} from '../../const';
 import FilmScreen from '../film-screen/film-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import MainScreen from '../main-screen/main-screen';
 import MyListScreen from '../my-list-screen/my-list-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PlayerScreen from '../player-screen/player-screen';
 import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
-import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
-import LoadingScreen from '../loading-screen/loading-screen';
+import browserHistory from '../../browser-history';
 
 const mapStateToProps = (state: State) => ({
   isDataLoaded: state.isDataLoaded,
@@ -31,7 +33,7 @@ function App(props: PropsFromRedux): JSX.Element {
 
   return (
 
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainScreen/>
@@ -43,12 +45,14 @@ function App(props: PropsFromRedux): JSX.Element {
           exact
           path={AppRoute.MyList}
           render={() => <MyListScreen />}
-          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.AddReview}>
-          <AddReviewScreen />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.AddReview}
+          render={() => <AddReviewScreen />}
+        >
+        </PrivateRoute>
         <Route path={AppRoute.Film}>
           <FilmScreen />
         </Route>

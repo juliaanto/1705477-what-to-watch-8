@@ -1,18 +1,19 @@
-import {Link} from 'react-router-dom';
-import {APIRoute, AppRoute} from '../../const';
+import {ConnectedProps, connect} from 'react-redux';
+import {useEffect, useState} from 'react';
+
+import {APIRoute} from '../../const';
+import {FilmFromServer} from '../../types/film';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../logo/logo';
+import {Promo} from '../../types/promo';
 import ShowMore from '../show-more/show-more';
 import {State} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
-import {getFilmsByGenre} from '../../utils/films';
-import api from '../../services/api';
-import {useEffect, useState} from 'react';
+import UserBlock from '../user-block/user-block';
 import {adaptPromoToClient} from '../../utils/adapter/promo';
-import {FilmFromServer} from '../../types/film';
-import {Promo} from '../../types/promo';
-import LoadingScreen from '../loading-screen/loading-screen';
+import api from '../../services/api';
+import {getFilmsByGenre} from '../../utils/films';
 
 const mapStateToProps = (state: State) => ({
   genre: state.genre,
@@ -53,18 +54,8 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
             <Logo />
           </div>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <Link to={AppRoute.MyList}>
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </Link>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.SignIn} className="user-block__link">Sign out</Link>
-            </li>
-          </ul>
+          <UserBlock />
+
         </header>
 
         <div className="film-card__wrap">
