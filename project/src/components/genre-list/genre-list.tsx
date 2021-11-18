@@ -13,9 +13,9 @@ type GenreListProps = {
   genre: string;
 }
 
-const mapStateToProps = (state: State) => ({
-  genre: state.genre,
-  films: state.films,
+const mapStateToProps = ({DATA, FILMS}: State) => ({
+  genre: FILMS.genre,
+  films: DATA.films,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

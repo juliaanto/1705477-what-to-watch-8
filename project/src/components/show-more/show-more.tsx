@@ -12,10 +12,10 @@ type ShowMoreProps = {
   filmsPerPageCount: number;
 }
 
-const mapStateToProps = (state: State) => ({
-  films: state.films,
-  filmsPerPageCount: state.filmsPerPageCount,
-  genre: state.genre,
+const mapStateToProps = ({DATA, FILMS}: State) => ({
+  films: DATA.films,
+  filmsPerPageCount: FILMS.filmsPerPageCount,
+  genre: FILMS.genre,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

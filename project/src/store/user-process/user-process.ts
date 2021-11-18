@@ -3,7 +3,7 @@ import {ActionType, Actions} from '../../types/action';
 import {AuthorizationStatus} from '../../const';
 import {UserProcess} from '../../types/state';
 
-const initialState = {
+const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userAvatar: '',
   loginError: undefined,

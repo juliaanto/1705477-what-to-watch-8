@@ -15,10 +15,10 @@ import {adaptPromoToClient} from '../../utils/adapter/promo';
 import api from '../../services/api';
 import {getFilmsByGenre} from '../../utils/films';
 
-const mapStateToProps = (state: State) => ({
-  genre: state.genre,
-  films: state.films,
-  filmsPerPageCount: state.filmsPerPageCount,
+const mapStateToProps = ({FILMS, DATA}: State) => ({
+  genre: FILMS.genre,
+  films: DATA.films,
+  filmsPerPageCount: FILMS.filmsPerPageCount,
 });
 
 const connector = connect(mapStateToProps);

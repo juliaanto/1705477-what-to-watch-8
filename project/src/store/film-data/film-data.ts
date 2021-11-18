@@ -2,9 +2,8 @@ import {ActionType, Actions} from '../../types/action';
 
 import {FilmData} from '../../types/state';
 
-const initialState = {
+const initialState: FilmData = {
   films: [],
-  film: {},
   isDataLoaded: false,
 };
 

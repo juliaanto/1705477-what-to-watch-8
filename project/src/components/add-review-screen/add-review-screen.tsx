@@ -12,8 +12,8 @@ import {fetchCurrentFilmAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {useParams} from 'react-router';
 
-const mapStateToProps = (state: State) => ({
-  film: state.currentFilm,
+const mapStateToProps = ({DATA}: State) => ({
+  film: DATA.currentFilm,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

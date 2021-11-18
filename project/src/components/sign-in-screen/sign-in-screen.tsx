@@ -7,8 +7,8 @@ import {State} from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
 import {loginAction} from '../../store/api-actions';
 
-const mapStateToProps = (state: State) => ({
-  loginError: state.loginError,
+const mapStateToProps = ({USER}: State) => ({
+  loginError: USER.loginError,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

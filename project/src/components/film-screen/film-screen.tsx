@@ -18,10 +18,10 @@ import {useParams} from 'react-router';
 
 const SIMILAR_FILMS_COUNT = 4;
 
-const mapStateToProps = (state: State) => ({
-  filmsPerPageCount: state.filmsPerPageCount,
-  film: state.currentFilm,
-  authorizationStatus: state.authorizationStatus,
+const mapStateToProps = ({DATA, FILMS, USER}: State) => ({
+  filmsPerPageCount: FILMS.filmsPerPageCount,
+  film: DATA.currentFilm,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

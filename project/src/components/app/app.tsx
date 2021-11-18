@@ -14,8 +14,8 @@ import SignInScreen from '../sign-in-screen/sign-in-screen';
 import {State} from '../../types/state';
 import browserHistory from '../../browser-history';
 
-const mapStateToProps = (state: State) => ({
-  isDataLoaded: state.isDataLoaded,
+const mapStateToProps = ({DATA}: State) => ({
+  isDataLoaded: DATA.isDataLoaded,
 });
 
 const connector = connect(mapStateToProps);

@@ -6,8 +6,8 @@ import {State} from '../../types/state';
 import UserBlock from '../user-block/user-block';
 import {getFavoriteFilms} from '../../utils/films';
 
-const mapStateToProps = (state: State) => ({
-  films: state.films,
+const mapStateToProps = ({DATA}: State) => ({
+  films: DATA.films,
 });
 
 const connector = connect(mapStateToProps);

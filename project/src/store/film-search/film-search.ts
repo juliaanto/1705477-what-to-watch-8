@@ -3,7 +3,7 @@ import {ActionType, Actions} from '../../types/action';
 
 import {FilmSearch} from '../../types/state';
 
-const initialState = {
+const initialState: FilmSearch = {
   genre: ALL_GENRES,
   filmsPerPageCount: FILMS_PER_PAGE_COUNT,
 };
