@@ -38,13 +38,12 @@ function FilmScreen(props: PropsFromRedux): JSX.Element {
   const {film, filmsPerPageCount, fetchCurrentFilm, authorizationStatus} = props;
   const {id} = useParams<{id: string}>();
 
-  fetchCurrentFilm(Number(id));
-
   const [appState, setAppState] = useState<Films>([]);
 
   useEffect(() => {
     api.get<FilmsFromServer>(APIRouteById.SimilarFilmsById(Number(id))).then((response) => setAppState(adaptFilmsToClient(response.data)));
-  }, [id, setAppState]);
+    fetchCurrentFilm(Number(id));
+  }, [fetchCurrentFilm, id, setAppState]);
 
   const similarFilms = appState.slice(0, SIMILAR_FILMS_COUNT);
 

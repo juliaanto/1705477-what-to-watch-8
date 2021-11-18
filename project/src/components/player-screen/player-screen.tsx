@@ -6,6 +6,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {State} from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
 import {fetchCurrentFilmAction} from '../../store/api-actions';
+import { useEffect } from 'react';
 import {useParams} from 'react-router';
 
 const mapStateToProps = (state: State) => ({
@@ -26,7 +27,9 @@ function PlayerScreen(props: PropsFromRedux): JSX.Element {
   const {film, fetchCurrentFilm} = props;
   const {id} = useParams<{id: string}>();
 
-  fetchCurrentFilm(Number(id));
+  useEffect(() => {
+    fetchCurrentFilm(Number(id));
+  }, [fetchCurrentFilm, id]);
 
   const playerStyle = {
     left: '30%',
