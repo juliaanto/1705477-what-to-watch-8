@@ -1,6 +1,6 @@
 import {APIRouteById, AuthorizationStatus, Links} from '../../const';
 import {ConnectedProps, connect} from 'react-redux';
-import { Films, FilmsFromServer } from '../../types/film';
+import {Films, FilmsFromServer} from '../../types/film';
 import {useEffect, useState} from 'react';
 
 import FilmList from '../film-list/film-list';
@@ -11,17 +11,20 @@ import {State} from '../../types/state';
 import Tabs from '../tabs/tabs';
 import {ThunkAppDispatch} from '../../types/action';
 import UserBlock from '../user-block/user-block';
-import { adaptFilmsToClient } from '../../utils/adapter/film';
+import {adaptFilmsToClient} from '../../utils/adapter/film';
 import api from '../../services/api';
 import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getCurrentFilm} from '../../store/film-data/selectors';
+import {getFilmsPerPageCount} from '../../store/film-search/selectors';
 import {useParams} from 'react-router';
 
 const SIMILAR_FILMS_COUNT = 4;
 
-const mapStateToProps = ({DATA, FILMS, USER}: State) => ({
-  filmsPerPageCount: FILMS.filmsPerPageCount,
-  film: DATA.currentFilm,
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  filmsPerPageCount: getFilmsPerPageCount(state),
+  film: getCurrentFilm(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

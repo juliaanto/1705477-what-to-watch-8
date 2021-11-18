@@ -7,15 +7,17 @@ import {Films} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {State} from '../../types/state';
 import {changeGenre} from '../../store/action';
+import {getFilms} from '../../store/film-data/selectors';
+import {getGenre} from '../../store/film-search/selectors';
 import {resetFilmsPerPage} from '../../store/action';
 
 type GenreListProps = {
   genre: string;
 }
 
-const mapStateToProps = ({DATA, FILMS}: State) => ({
-  genre: FILMS.genre,
-  films: DATA.films,
+const mapStateToProps = (state: State) => ({
+  genre: getGenre(state),
+  films: getFilms(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
