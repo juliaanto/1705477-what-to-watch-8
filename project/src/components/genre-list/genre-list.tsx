@@ -7,6 +7,8 @@ import {Films} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {State} from '../../types/state';
 import {changeGenre} from '../../store/action';
+import {getFilms} from '../../store/film-data/selectors';
+import {getGenre} from '../../store/film-search/selectors';
 import {resetFilmsPerPage} from '../../store/action';
 
 type GenreListProps = {
@@ -14,8 +16,8 @@ type GenreListProps = {
 }
 
 const mapStateToProps = (state: State) => ({
-  genre: state.genre,
-  films: state.films,
+  genre: getGenre(state),
+  films: getFilms(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

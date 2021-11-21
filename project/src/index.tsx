@@ -9,11 +9,11 @@ import api from './services/api';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {fetchFilmsAction} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
-import {reducer} from './store/reducer';
+import {rootReducer} from './store/root-reducer';
 import thunk from 'redux-thunk';
 
 export const store = createStore(
-  reducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
     applyMiddleware(redirect),

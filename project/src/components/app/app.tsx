@@ -13,9 +13,10 @@ import PrivateRoute from '../private-route/private-route';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
 import {State} from '../../types/state';
 import browserHistory from '../../browser-history';
+import {getLoadedDataStatus} from '../../store/film-data/selectors';
 
 const mapStateToProps = (state: State) => ({
-  isDataLoaded: state.isDataLoaded,
+  isDataLoaded: getLoadedDataStatus(state),
 });
 
 const connector = connect(mapStateToProps);

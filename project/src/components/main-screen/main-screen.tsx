@@ -1,4 +1,5 @@
 import {ConnectedProps, connect} from 'react-redux';
+import {getFilmsPerPageCount, getGenre} from '../../store/film-search/selectors';
 import {useEffect, useState} from 'react';
 
 import {APIRoute} from '../../const';
@@ -13,12 +14,13 @@ import {State} from '../../types/state';
 import UserBlock from '../user-block/user-block';
 import {adaptPromoToClient} from '../../utils/adapter/promo';
 import api from '../../services/api';
+import {getFilms} from '../../store/film-data/selectors';
 import {getFilmsByGenre} from '../../utils/films';
 
 const mapStateToProps = (state: State) => ({
-  genre: state.genre,
-  films: state.films,
-  filmsPerPageCount: state.filmsPerPageCount,
+  genre: getGenre(state),
+  films: getFilms(state),
+  filmsPerPageCount: getFilmsPerPageCount(state),
 });
 
 const connector = connect(mapStateToProps);

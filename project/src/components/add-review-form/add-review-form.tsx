@@ -1,10 +1,10 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {ConnectedProps, connect} from 'react-redux';
 
-import { CommentPost } from '../../types/review';
+import {CommentPost} from '../../types/review';
 import {ThunkAppDispatch} from '../../types/action';
-import { commentPostAction } from '../../store/api-actions';
-import { useParams } from 'react-router';
+import {commentPostAction} from '../../store/api-actions';
+import {useParams} from 'react-router';
 
 const RATING_VALUES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 

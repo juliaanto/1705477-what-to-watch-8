@@ -1,11 +1,13 @@
-import { ConnectedProps, connect } from 'react-redux';
+import {ConnectedProps, connect} from 'react-redux';
+import {getFilmsPerPageCount, getGenre} from '../../store/film-search/selectors';
 
-import { Actions } from '../../types/action';
-import { Dispatch } from 'redux';
-import { Films } from '../../types/film';
-import { State } from '../../types/state';
-import { getFilmsByGenre } from '../../utils/films';
-import { showMoreFilms } from '../../store/action';
+import {Actions} from '../../types/action';
+import {Dispatch} from 'redux';
+import {Films} from '../../types/film';
+import {State} from '../../types/state';
+import {getFilms} from '../../store/film-data/selectors';
+import {getFilmsByGenre} from '../../utils/films';
+import {showMoreFilms} from '../../store/action';
 
 type ShowMoreProps = {
   films: Films;
@@ -13,9 +15,9 @@ type ShowMoreProps = {
 }
 
 const mapStateToProps = (state: State) => ({
-  films: state.films,
-  filmsPerPageCount: state.filmsPerPageCount,
-  genre: state.genre,
+  films: getFilms(state),
+  filmsPerPageCount: getFilmsPerPageCount(state),
+  genre: getGenre(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

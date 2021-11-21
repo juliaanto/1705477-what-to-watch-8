@@ -5,9 +5,10 @@ import Logo from '../logo/logo';
 import {State} from '../../types/state';
 import UserBlock from '../user-block/user-block';
 import {getFavoriteFilms} from '../../utils/films';
+import {getFilms} from '../../store/film-data/selectors';
 
 const mapStateToProps = (state: State) => ({
-  films: state.films,
+  films: getFilms(state),
 });
 
 const connector = connect(mapStateToProps);

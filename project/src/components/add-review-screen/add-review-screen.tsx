@@ -9,11 +9,12 @@ import {State} from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
 import UserBlock from '../user-block/user-block';
 import {fetchCurrentFilmAction} from '../../store/api-actions';
+import { getCurrentFilm } from '../../store/film-data/selectors';
 import {useEffect} from 'react';
 import {useParams} from 'react-router';
 
 const mapStateToProps = (state: State) => ({
-  film: state.currentFilm,
+  film: getCurrentFilm(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
