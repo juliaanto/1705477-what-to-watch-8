@@ -104,3 +104,16 @@ export const fetchPromoAction = (): ThunkActionResult =>
       }
     }
   };
+
+export const changeFavoriteStatusAction = (filmId: number, favoriteStatus: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      await api.post(APIRouteById.ChangeFavoriteStatusByFilmId(filmId, favoriteStatus));
+    } catch (error: unknown){
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
+      }
+    }
+  };

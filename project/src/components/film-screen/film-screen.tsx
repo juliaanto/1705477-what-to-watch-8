@@ -6,6 +6,7 @@ import {useEffect, useState} from 'react';
 import FilmList from '../film-list/film-list';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
+import MyListButton from '../my-list-button/my-list-button';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {State} from '../../types/state';
 import Tabs from '../tabs/tabs';
@@ -88,12 +89,9 @@ function FilmScreen(props: PropsFromRedux): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                <MyListButton isFavorite={film.isFavorite}/>
+
                 {authorizationStatus === AuthorizationStatus.Auth ?
                   <Link to={Links.AddReviewByFilmId(film.id)} className="btn film-card__button">Add review</Link>
                   : ''}

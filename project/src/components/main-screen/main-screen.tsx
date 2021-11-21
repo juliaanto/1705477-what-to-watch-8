@@ -5,9 +5,10 @@ import {getFilmsPerPageCount, getGenre} from '../../store/film-search/selectors'
 
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../logo/logo';
+import MyListButton from '../my-list-button/my-list-button';
 import ShowMore from '../show-more/show-more';
 import {State} from '../../types/state';
 import UserBlock from '../user-block/user-block';
@@ -69,12 +70,9 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                <MyListButton isFavorite={promo.isFavorite}/>
+
               </div>
             </div>
           </div>
