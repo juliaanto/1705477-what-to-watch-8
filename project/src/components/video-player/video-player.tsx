@@ -35,13 +35,13 @@ function VideoPlayer({previewImage, src, autoPlay, muted, isActive}: VideoPlayer
     }
 
     if (isPlaying) {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         if (videoRef.current !== null) {
           videoRef.current.play();
         }
       }, VIDEO_TIMEOUT);
 
-      return;
+      return () => clearTimeout(id);
     }
 
     videoRef.current.load();

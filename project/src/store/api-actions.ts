@@ -1,4 +1,4 @@
-import {APIRoute, APIRouteById, AppRoute, AuthorizationStatus} from '../const';
+import {APIRoute, APIRouteById, AppRoute, AuthorizationStatus, Links} from '../const';
 import {FilmFromServer, FilmsFromServer} from '../types/film';
 import {adaptFilmToClient, adaptFilmsToClient} from '../utils/adapter/film';
 import {dropToken, saveToken} from '../services/token';
@@ -6,6 +6,7 @@ import {dropUserAvatar, loadFilm, loadFilms, redirectToRoute, requireAuthorizati
 
 import {AuthData} from '../types/auth-data';
 import {AuthInfoFromServer} from '../types/auth-info';
+import {CommentPost} from '../types/review';
 import {HttpCode} from '../services/api';
 import {ThunkActionResult} from '../types/action';
 import {adaptAuthInfoToClient} from '../utils/adapter/auth-info';
@@ -74,4 +75,18 @@ export const logoutAction = (): ThunkActionResult =>
     dropToken();
     dispatch(requireLogout());
     dispatch(dropUserAvatar());
+  };
+
+export const commentPostAction = (filmId: number, {rating, comment}: CommentPost): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      await api.post<CommentPost>(APIRouteById.CommentPostByFilmId(filmId), {rating, comment});
+      dispatch(redirectToRoute(Links.ReviewsFilmById(filmId)));
+    } catch (error: unknown){
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
+      }
+    }
   };

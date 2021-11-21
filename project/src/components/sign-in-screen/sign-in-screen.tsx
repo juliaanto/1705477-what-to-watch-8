@@ -64,8 +64,10 @@ function SignInScreen(props: PropsFromRedux): JSX.Element {
               <input
                 ref={loginRef}
                 className="sign-in__input"
-                type="email" placeholder="Email address"
-                name="user-email" id="user-email"
+                type="email"
+                placeholder="Email address"
+                name="user-email"
+                id="user-email"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
