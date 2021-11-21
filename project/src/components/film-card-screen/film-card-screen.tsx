@@ -16,7 +16,7 @@ function FilmCardScreen(props: FilmCardScreenProps): JSX.Element {
     <>
       <Link to={Links.OverviewFilmById(film.id)}>
         <div className="small-film-card__image">
-          <VideoPlayer src={previewVideoLink} previewImage={previewImage} autoPlay={false} muted isActive={isActive}/>
+          <VideoPlayer src={previewVideoLink} previewImage={previewImage} muted isActive={isActive}/>
         </div>
       </Link>
       <h3 className="small-film-card__title">

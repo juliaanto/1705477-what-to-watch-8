@@ -1,26 +1,23 @@
 import {ConnectedProps, connect} from 'react-redux';
+import {Links, promoId} from '../../const';
+import {getFilms, getPromo} from '../../store/film-data/selectors';
 import {getFilmsPerPageCount, getGenre} from '../../store/film-search/selectors';
-import {useEffect, useState} from 'react';
 
-import {APIRoute} from '../../const';
-import {FilmFromServer} from '../../types/film';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
+import { Link } from 'react-router-dom';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../logo/logo';
-import {Promo} from '../../types/promo';
 import ShowMore from '../show-more/show-more';
 import {State} from '../../types/state';
 import UserBlock from '../user-block/user-block';
-import {adaptPromoToClient} from '../../utils/adapter/promo';
-import api from '../../services/api';
-import {getFilms} from '../../store/film-data/selectors';
 import {getFilmsByGenre} from '../../utils/films';
 
 const mapStateToProps = (state: State) => ({
   genre: getGenre(state),
   films: getFilms(state),
   filmsPerPageCount: getFilmsPerPageCount(state),
+  promo: getPromo(state),
 });
 
 const connector = connect(mapStateToProps);
@@ -28,15 +25,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function MainScreen(props: PropsFromRedux): JSX.Element {
-  const {genre, films, filmsPerPageCount} = props;
-
-  const [appState, setAppState] = useState<Promo>();
-
-  useEffect(() => {
-    api.get<FilmFromServer>(APIRoute.Promo).then((response) => setAppState(adaptPromoToClient(response.data)));
-  }, [setAppState]);
-
-  const promo = appState;
+  const {genre, films, filmsPerPageCount, promo} = props;
 
   if (!promo) {
     return <LoadingScreen />;
@@ -74,12 +63,12 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={Links.PlayerById(promoId)} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
+                </Link>
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>

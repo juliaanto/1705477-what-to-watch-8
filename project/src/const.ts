@@ -33,9 +33,11 @@ export const Links = {
   DetailsFilmById: ((id: number): string => `/films/${id}/details`),
   ReviewsFilmById: ((id: number): string => `/films/${id}/reviews`),
   AddReviewByFilmId: ((id: number): string => `/films/${id}/review`),
-  PlayerById: ((id: number): string => `/player/${id}`),
+  PlayerById: ((id: number | string): string => `/player/${id}`),
 };
 
 export const ALL_GENRES = 'All genres';
 
 export const FILMS_PER_PAGE_COUNT = 8;
+
+export const promoId = 'promo';

@@ -1,24 +1,56 @@
+import {ConnectedProps, connect} from 'react-redux';
+import {setCurrentPlayerTime, setVideoDuration} from '../../store/action';
 import {useEffect, useRef, useState} from 'react';
 
-const VIDEO_TIMEOUT = 1000;
+import {ThunkAppDispatch} from '../../types/action';
+
+const PREVIEW_HOVER_TIMEOUT = 1000;
+const PLAYER_INTERVAL_TIMEOUT = 1000;
 
 type VideoPlayerProps = {
   previewImage: string;
   src: string;
-  autoPlay: boolean;
   muted: boolean;
   isActive: boolean;
+  className?: string;
+  isFilmScreen?: boolean;
+  isFullScreen?: boolean;
 }
 
-function VideoPlayer({previewImage, src, autoPlay, muted, isActive}: VideoPlayerProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onFilmPlay(currentTime: number) {
+    dispatch(setCurrentPlayerTime(currentTime));
+  },
+  onFilmChange(videoDuration: number) {
+    dispatch(setVideoDuration(videoDuration));
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & VideoPlayerProps;
+
+function VideoPlayer({previewImage, src, muted, isActive, className, isFilmScreen, isFullScreen, onFilmPlay, onFilmChange}: ConnectedComponentProps): JSX.Element {
   const [, setIsLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const isPlaying = isActive;
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (videoRef.current !== null) {
-      videoRef.current.onloadeddata = () => setIsLoading(false);
+      videoRef.current.onloadeddata = () => {
+        setIsLoading(false);
+        if (videoRef.current !== null) {
+          onFilmChange(videoRef.current.duration);
+        }
+      };
+    }
+
+    if (isFilmScreen && videoRef.current !== null) {
+      onFilmChange(videoRef.current.duration);
+
+      videoRef.current.play();
     }
 
     return () => {
@@ -27,30 +59,42 @@ function VideoPlayer({previewImage, src, autoPlay, muted, isActive}: VideoPlayer
         videoRef.current = null;
       }
     };
-  }, [src]);
+  }, [isFilmScreen, onFilmChange, src]);
 
   useEffect(() => {
     if (videoRef.current === null) {
       return;
     }
 
-    if (isPlaying) {
-      const id = setTimeout(() => {
-        if (videoRef.current !== null) {
-          videoRef.current.play();
-        }
-      }, VIDEO_TIMEOUT);
+    if (!isFilmScreen) {
+      if (isPlaying) {
+        const id = setTimeout(() => {
+          if (videoRef.current !== null) {
+            videoRef.current.play();
+          }
+        }, PREVIEW_HOVER_TIMEOUT);
 
+        return () => clearTimeout(id);
+      }
+
+      videoRef.current.load();
+    }
+
+    if (isPlaying) {
+      videoRef.current.play();
+      const id = setInterval(() => {
+        if (videoRef.current === null) {
+          return;
+        }
+        onFilmPlay(videoRef.current.currentTime);
+      }, PLAYER_INTERVAL_TIMEOUT);
       return () => clearTimeout(id);
     }
 
-    videoRef.current.load();
+    videoRef.current.pause();
 
-  }, [isPlaying]);
 
-  useEffect(() => {
-    isActive ? setIsPlaying(true) : setIsPlaying(false);
-  }, [isActive]);
+  }, [isFilmScreen, isPlaying, onFilmPlay]);
 
   useEffect(() => {
     if (videoRef.current !== null) {
@@ -58,9 +102,21 @@ function VideoPlayer({previewImage, src, autoPlay, muted, isActive}: VideoPlayer
     }
   }, [muted]);
 
+  useEffect(() => {
+    if (videoRef.current === null) {
+      return;
+    }
+
+    if (isFullScreen) {
+      videoRef.current.requestFullscreen();
+    }
+
+  }, [isFullScreen]);
+
   return (
-    <video src={src} ref={videoRef} poster={previewImage} />
+    <video className={className} src={src} ref={videoRef} poster={previewImage} />
   );
 }
 
-export default VideoPlayer;
+export {VideoPlayer};
+export default connector(VideoPlayer);

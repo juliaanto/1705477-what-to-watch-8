@@ -7,13 +7,16 @@ import {
   dropUserAvatar,
   loadFilm,
   loadFilms,
+  loadPromo,
   redirectToRoute,
   requireAuthorization,
   requireLogout,
   resetFilmsPerPage,
   resetGenre,
   saveUserAvatar,
+  setCurrentPlayerTime,
   setLoginError,
+  setVideoDuration,
   showMoreFilms
 } from '../store/action';
 
@@ -37,6 +40,9 @@ export enum ActionType {
   SaveUserAvatar = 'data/saveUserAvatar',
   DropUserAvatar = 'data/dropUserAvatar',
   SetLoginError = 'uesr/setLoginError',
+  SetCurrentPlayerTime = 'films/setCurrentPlayerTime',
+  SetVideoDuration = 'films/setVideoDuration',
+  LoadPromo = 'data/loadPromo',
 }
 
 export type Actions =
@@ -51,7 +57,10 @@ export type Actions =
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof saveUserAvatar>
   | ReturnType<typeof dropUserAvatar>
-  | ReturnType<typeof setLoginError>;
+  | ReturnType<typeof setLoginError>
+  | ReturnType<typeof setCurrentPlayerTime>
+  | ReturnType<typeof setVideoDuration>
+  | ReturnType<typeof loadPromo>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

@@ -7,11 +7,14 @@ export type FilmData = {
   films: Films,
   currentFilm?: Film,
   isDataLoaded: boolean,
+  promo?: Film,
 };
 
 export type FilmSearch = {
   genre: string,
   filmsPerPageCount: number,
+  currentPlayerTime: number,
+  videoDuration: number,
 };
 
 export type UserProcess = {
