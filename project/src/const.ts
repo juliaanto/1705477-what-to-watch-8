@@ -45,3 +45,18 @@ export const FILMS_PER_PAGE_COUNT = 8;
 export const PROMO_ID = 'promo';
 
 export const GENRES_COUNT = 9;
+
+export enum RatingText {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
+}
+
+export enum RatingBoundaryValue {
+  Bad = 3,
+  Normal = 5,
+  Good = 8,
+  VeryGood = 10,
+}
