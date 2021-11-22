@@ -41,7 +41,6 @@ function MyListButton(props: ConnectedComponentProps): JSX.Element {
   const [favoriteStatus, setFavoriteStatus] = useState(isFavorite);
 
   const handleClick = () => {
-
     onFavoriteButtonClick(currentId, Number(!favoriteStatus));
     setFavoriteStatus(!favoriteStatus);
   };

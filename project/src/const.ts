@@ -42,4 +42,6 @@ export const ALL_GENRES = 'All genres';
 
 export const FILMS_PER_PAGE_COUNT = 8;
 
-export const promoId = 'promo';
+export const PROMO_ID = 'promo';
+
+export const GENRES_COUNT = 9;

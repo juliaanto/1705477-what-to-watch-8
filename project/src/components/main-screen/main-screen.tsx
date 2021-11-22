@@ -1,5 +1,5 @@
 import {ConnectedProps, connect} from 'react-redux';
-import {Links, promoId} from '../../const';
+import {Links, PROMO_ID} from '../../const';
 import {getFilms, getPromo} from '../../store/film-data/selectors';
 import {getFilmsPerPageCount, getGenre} from '../../store/film-search/selectors';
 
@@ -64,7 +64,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={Links.PlayerById(promoId)} className="btn btn--play film-card__button" type="button">
+                <Link to={Links.PlayerById(PROMO_ID)} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

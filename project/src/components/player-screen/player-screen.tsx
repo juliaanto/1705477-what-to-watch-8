@@ -1,4 +1,4 @@
-import {AppRoute, Links, promoId} from '../../const';
+import {AppRoute, Links, PROMO_ID} from '../../const';
 import {ConnectedProps, connect} from 'react-redux';
 import {getCurrentFilm, getPromo} from '../../store/film-data/selectors';
 import {getCurrentPlayerTime, getVideoDuration} from '../../store/film-search/selectors';
@@ -40,10 +40,10 @@ function PlayerScreen(props: PropsFromRedux): JSX.Element {
 
   let currentFilm: Film | undefined;
 
-  id === promoId ? currentFilm = promo : currentFilm = film;
+  id === PROMO_ID ? currentFilm = promo : currentFilm = film;
 
   useEffect(() => {
-    if (id !== promoId) {
+    if (id !== PROMO_ID) {
       fetchCurrentFilm(Number(id));
     }
   }, [fetchCurrentFilm, id]);
@@ -69,7 +69,7 @@ function PlayerScreen(props: PropsFromRedux): JSX.Element {
 
       <VideoPlayer className="player__video" previewImage={currentFilm.posterImage} src={currentFilm.videoLink} muted={false} isActive={isActive} isFilmScreen isFullScreen={isFullScreen} />
 
-      <Link to={id === promoId ? AppRoute.Main : Links.OverviewFilmById(currentFilm.id)} type="button" className="player__exit">Exit</Link>
+      <Link to={id === PROMO_ID ? AppRoute.Main : Links.OverviewFilmById(currentFilm.id)} type="button" className="player__exit">Exit</Link>
 
       <div className="player__controls">
         <div className="player__controls-row">

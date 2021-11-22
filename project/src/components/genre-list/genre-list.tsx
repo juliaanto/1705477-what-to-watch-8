@@ -1,4 +1,4 @@
-import {ALL_GENRES, AppRoute} from '../../const';
+import {ALL_GENRES, AppRoute, GENRES_COUNT} from '../../const';
 import {ConnectedProps, connect} from 'react-redux';
 
 import {Actions} from '../../types/action';
@@ -37,7 +37,7 @@ type ConnectedComponentProps = PropsFromRedux & GenreListProps;
 function GenreList(props: ConnectedComponentProps): JSX.Element {
   const {genre, films, onChangeGenre, onResetFilmsPerPage} = props;
 
-  const genresFromFilms = (allFilms: Films): string[] => [...new Set(allFilms.map((film) => film.genre))];
+  const genresFromFilms = (allFilms: Films): string[] => [...new Set(allFilms.map((film) => film.genre))].slice(0, GENRES_COUNT);
   const genresList = [ALL_GENRES, ...genresFromFilms(films)];
 
   return (
