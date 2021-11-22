@@ -37,7 +37,7 @@ function App(props: PropsFromRedux): JSX.Element {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen/>
+          <MainScreen />
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <SignInScreen />

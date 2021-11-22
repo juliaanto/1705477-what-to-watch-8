@@ -13,6 +13,7 @@ export enum APIRoute {
   Promo = '/promo',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
 }
 
 export const APIRouteById = {

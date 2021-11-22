@@ -109,7 +109,7 @@ export const changeFavoriteStatusAction = (filmId: number, favoriteStatus: numbe
   async (dispatch, _getState, api): Promise<void> => {
     try {
       await api.post(APIRouteById.ChangeFavoriteStatusByFilmId(filmId, favoriteStatus));
-    } catch (error: unknown){
+    } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === HttpCode.Unauthorized) {
           dispatch(redirectToRoute(AppRoute.SignIn));

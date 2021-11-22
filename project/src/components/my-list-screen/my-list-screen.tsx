@@ -1,10 +1,14 @@
 import {ConnectedProps, connect} from 'react-redux';
+import { Films, FilmsFromServer } from '../../types/film';
+import { useEffect, useState } from 'react';
 
+import { APIRoute } from '../../const';
 import FilmList from '../film-list/film-list';
 import Logo from '../logo/logo';
 import {State} from '../../types/state';
 import UserBlock from '../user-block/user-block';
-import {getFavoriteFilms} from '../../utils/films';
+import { adaptFilmsToClient } from '../../utils/adapter/film';
+import api from '../../services/api';
 import {getFilms} from '../../store/film-data/selectors';
 
 const mapStateToProps = (state: State) => ({
@@ -17,6 +21,12 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function MyListScreen(props: PropsFromRedux): JSX.Element {
   const {films} = props;
+
+  const [appState, setAppState] = useState<Films>([]);
+
+  useEffect(() => {
+    api.get<FilmsFromServer>(APIRoute.Favorite).then((response) => setAppState(adaptFilmsToClient(response.data)));
+  }, [setAppState]);
 
   return (
     <div className="user-page">
@@ -34,7 +44,7 @@ function MyListScreen(props: PropsFromRedux): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList films={getFavoriteFilms(films)} filmsPerPageCount={films.length}/>
+        <FilmList films={appState} filmsPerPageCount={films.length}/>
 
       </section>
 

@@ -13,8 +13,6 @@ export const getFilmsByGenre = (genre: string, films: Films): Films => {
   return films.filter((film) => film.genre === genre);
 };
 
-export const getFavoriteFilms = (films: Films): Films => films.filter((film) => film.isFavorite === true);
-
 export const getElapsedTime = (currentTimeInSeconds: number, durationInSeconds: number): string => {
   if (durationInSeconds < 60 * 60) {
     return dayjs.duration((Math.floor(durationInSeconds - currentTimeInSeconds)), 'seconds').format('-mm:ss');
