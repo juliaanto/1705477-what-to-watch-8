@@ -60,3 +60,10 @@ export enum RatingBoundaryValue {
   Good = 8,
   VeryGood = 10,
 }
+
+export const RATING_VALUES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+export enum ReviewTextLength {
+  Min = 50,
+  Max = 400,
+}
