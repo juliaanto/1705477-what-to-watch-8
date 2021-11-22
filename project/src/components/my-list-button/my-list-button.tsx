@@ -1,13 +1,20 @@
 import {ConnectedProps, connect} from 'react-redux';
+import {useLocation, useParams} from 'react-router';
 
+import { AppRoute } from '../../const';
+import {State} from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
 import {changeFavoriteStatusAction} from '../../store/api-actions';
-import {useParams} from 'react-router';
+import { getPromo } from '../../store/film-data/selectors';
 import {useState} from 'react';
 
 type MyListButtonProps = {
   isFavorite: boolean;
 }
+
+const mapStateToProps = (state: State) => ({
+  promo: getPromo(state),
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onFavoriteButtonClick(filmId: number, favoriteStatus: number) {
@@ -15,20 +22,27 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MyListButtonProps;
 
 function MyListButton(props: ConnectedComponentProps): JSX.Element {
-  const {onFavoriteButtonClick, isFavorite} = props;
+  const {onFavoriteButtonClick, isFavorite, promo} = props;
 
   const {id} = useParams<{id: string}>();
+  let currentId = Number(id);
+  const {pathname} = useLocation<{pathname: string}>();
+
+  if (pathname === AppRoute.Main && promo) {
+    currentId = promo.id;
+  }
 
   const [favoriteStatus, setFavoriteStatus] = useState(isFavorite);
 
   const handleClick = () => {
-    onFavoriteButtonClick(Number(id), Number(!favoriteStatus));
+
+    onFavoriteButtonClick(currentId, Number(!favoriteStatus));
     setFavoriteStatus(!favoriteStatus);
   };
 

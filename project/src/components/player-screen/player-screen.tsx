@@ -1,5 +1,5 @@
+import {AppRoute, Links, promoId} from '../../const';
 import {ConnectedProps, connect} from 'react-redux';
-import {Links, promoId} from '../../const';
 import {getCurrentFilm, getPromo} from '../../store/film-data/selectors';
 import {getCurrentPlayerTime, getVideoDuration} from '../../store/film-search/selectors';
 import {getElapsedTime, getPlayerProgress} from '../../utils/films';
@@ -69,7 +69,7 @@ function PlayerScreen(props: PropsFromRedux): JSX.Element {
 
       <VideoPlayer className="player__video" previewImage={currentFilm.posterImage} src={currentFilm.videoLink} muted={false} isActive={isActive} isFilmScreen isFullScreen={isFullScreen} />
 
-      <Link to={Links.OverviewFilmById(currentFilm.id)} type="button" className="player__exit">Exit</Link>
+      <Link to={id === promoId ? AppRoute.Main : Links.OverviewFilmById(currentFilm.id)} type="button" className="player__exit">Exit</Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
