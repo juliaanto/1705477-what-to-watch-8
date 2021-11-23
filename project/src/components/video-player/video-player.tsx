@@ -2,6 +2,7 @@ import {ConnectedProps, connect} from 'react-redux';
 import {setCurrentPlayerTime, setVideoDuration} from '../../store/action';
 import {useEffect, useRef, useState} from 'react';
 
+import LoadingScreen from '../loading-screen/loading-screen';
 import {ThunkAppDispatch} from '../../types/action';
 
 const PREVIEW_HOVER_TIMEOUT = 1000;
@@ -32,7 +33,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & VideoPlayerProps;
 
 function VideoPlayer({previewImage, src, muted, isActive, className, isFilmScreen, isFullScreen, onFilmPlay, onFilmChange}: ConnectedComponentProps): JSX.Element {
-  const [, setIsLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const isPlaying = isActive;
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -40,7 +41,6 @@ function VideoPlayer({previewImage, src, muted, isActive, className, isFilmScree
   useEffect(() => {
     if (videoRef.current !== null) {
       videoRef.current.onloadeddata = () => {
-        setIsLoading(false);
         if (videoRef.current !== null) {
           onFilmChange(videoRef.current.duration);
         }
@@ -114,7 +114,10 @@ function VideoPlayer({previewImage, src, muted, isActive, className, isFilmScree
   }, [isFullScreen]);
 
   return (
-    <video className={className} src={src} ref={videoRef} poster={previewImage} />
+    <>
+      {!isLoaded && <LoadingScreen />}
+      <video className={className} src={src} ref={videoRef} poster={previewImage} onCanPlayThrough={() => setIsLoaded(true)} />
+    </>
   );
 }
 
