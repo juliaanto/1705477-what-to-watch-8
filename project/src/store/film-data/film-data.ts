@@ -17,6 +17,10 @@ const filmData = (state = initialState, action: Actions): FilmData => {
       const {currentFilm} = action.payload;
       return {...state, currentFilm};
     }
+    case ActionType.LoadPromo: {
+      const {promo} = action.payload;
+      return {...state, promo};
+    }
     default:
       return state;
   }

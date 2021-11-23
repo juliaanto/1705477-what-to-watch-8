@@ -2,7 +2,7 @@ import {APIRoute, APIRouteById, AppRoute, AuthorizationStatus, Links} from '../c
 import {FilmFromServer, FilmsFromServer} from '../types/film';
 import {adaptFilmToClient, adaptFilmsToClient} from '../utils/adapter/film';
 import {dropToken, saveToken} from '../services/token';
-import {dropUserAvatar, loadFilm, loadFilms, redirectToRoute, requireAuthorization, requireLogout, saveUserAvatar, setLoginError} from './action';
+import {dropUserAvatar, loadFilm, loadFilms, loadPromo, redirectToRoute, requireAuthorization, requireLogout, saveUserAvatar, setLoginError} from './action';
 
 import {AuthData} from '../types/auth-data';
 import {AuthInfoFromServer} from '../types/auth-info';
@@ -83,6 +83,33 @@ export const commentPostAction = (filmId: number, {rating, comment}: CommentPost
       await api.post<CommentPost>(APIRouteById.CommentPostByFilmId(filmId), {rating, comment});
       dispatch(redirectToRoute(Links.ReviewsFilmById(filmId)));
     } catch (error: unknown){
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
+      }
+    }
+  };
+
+export const fetchPromoAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await api.get<FilmFromServer>(APIRoute.Promo);
+      dispatch(loadPromo(adaptFilmToClient(data)));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.NotFound) {
+          dispatch(redirectToRoute(AppRoute.NotFound));
+        }
+      }
+    }
+  };
+
+export const changeFavoriteStatusAction = (filmId: number, favoriteStatus: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      await api.post(APIRouteById.ChangeFavoriteStatusByFilmId(filmId, favoriteStatus));
+    } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === HttpCode.Unauthorized) {
           dispatch(redirectToRoute(AppRoute.SignIn));

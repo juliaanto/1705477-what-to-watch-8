@@ -61,3 +61,20 @@ export const setLoginError = (loginError: string) => ({
   type: ActionType.SetLoginError,
   payload: loginError,
 } as const);
+
+export const setCurrentPlayerTime = (currentPlayerTime: number) => ({
+  type: ActionType.SetCurrentPlayerTime,
+  payload: currentPlayerTime,
+} as const);
+
+export const setVideoDuration = (videoDuration: number) => ({
+  type: ActionType.SetVideoDuration,
+  payload: videoDuration,
+} as const);
+
+export const loadPromo = (promo: Film) => ({
+  type: ActionType.LoadPromo,
+  payload: {
+    promo,
+  },
+} as const);
