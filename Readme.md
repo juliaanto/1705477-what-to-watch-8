@@ -29,7 +29,7 @@ To clone and run this application:
 
 ```
 git clone https://github.com/juliaanto/1705477-what-to-watch-8.git
-cd 1705477-what-to-watch-8
+cd 1705477-what-to-watch-8/project
 npm install
 npm start
 ```
