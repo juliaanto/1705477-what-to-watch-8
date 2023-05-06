@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/1705477-what-to-watch-8/static/css/main.b632274b.chunk.css",
-    "main.js": "/1705477-what-to-watch-8/static/js/main.c66d2a9d.chunk.js",
-    "main.js.map": "/1705477-what-to-watch-8/static/js/main.c66d2a9d.chunk.js.map",
+    "main.js": "/1705477-what-to-watch-8/static/js/main.93fc434e.chunk.js",
+    "main.js.map": "/1705477-what-to-watch-8/static/js/main.93fc434e.chunk.js.map",
     "runtime-main.js": "/1705477-what-to-watch-8/static/js/runtime-main.fc49719e.js",
     "runtime-main.js.map": "/1705477-what-to-watch-8/static/js/runtime-main.fc49719e.js.map",
-    "static/js/2.8d8fb6bb.chunk.js": "/1705477-what-to-watch-8/static/js/2.8d8fb6bb.chunk.js",
-    "static/js/2.8d8fb6bb.chunk.js.map": "/1705477-what-to-watch-8/static/js/2.8d8fb6bb.chunk.js.map",
+    "static/js/2.0380184f.chunk.js": "/1705477-what-to-watch-8/static/js/2.0380184f.chunk.js",
+    "static/js/2.0380184f.chunk.js.map": "/1705477-what-to-watch-8/static/js/2.0380184f.chunk.js.map",
     "index.html": "/1705477-what-to-watch-8/index.html",
     "static/css/main.b632274b.chunk.css.map": "/1705477-what-to-watch-8/static/css/main.b632274b.chunk.css.map",
-    "static/js/2.8d8fb6bb.chunk.js.LICENSE.txt": "/1705477-what-to-watch-8/static/js/2.8d8fb6bb.chunk.js.LICENSE.txt"
+    "static/js/2.0380184f.chunk.js.LICENSE.txt": "/1705477-what-to-watch-8/static/js/2.0380184f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.fc49719e.js",
-    "static/js/2.8d8fb6bb.chunk.js",
+    "static/js/2.0380184f.chunk.js",
     "static/css/main.b632274b.chunk.css",
-    "static/js/main.c66d2a9d.chunk.js"
+    "static/js/main.93fc434e.chunk.js"
   ]
 }
