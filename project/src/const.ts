@@ -1,5 +1,5 @@
 export enum AppRoute {
-  Main = '/1705477-what-to-watch-8',
+  Main = '/',
   SignIn = '/login',
   MyList = '/mylist',
   Film = '/films/:id',
